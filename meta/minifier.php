@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/3/2022 17:10
+ * Last Modified: 8/3/2022 18:0
  */
 
-function getMinified( string $content )
+function getMinified( string $content ): bool|string|null
 {
     $url = 'https://www.toptal.com/developers/javascript-minifier/api/raw';
     $ch  = curl_init();
@@ -17,17 +17,19 @@ function getMinified( string $content )
     ] );
     $minified = curl_exec( $ch );
     $status   = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+    curl_close( $ch );
     if ( $status !== 200 ) {
         echo "\nMinifier Error: $minified\n";
-        return;
+        return null;
     }
-    curl_close( $ch );
     return $minified;
 }
 
 $minify = getMinified( file_get_contents( 'jolt.js' ) );
-if ( ! file_put_contents( 'jolt.min.js', generate_copyright().$minify ) ) {
-    die( "Error! Unable to save minified version." );
+if ( $minify !== null ) {
+    if ( ! file_put_contents( 'jolt.min.js', generate_copyright().$minify ) ) {
+        die( "Error! Unable to save minified version." );
+    }
+    
+    echo successful( 'Minified jolt.js!' )."\n";
 }
-
-echo successful( 'Minified jolt.js!' )."\n";

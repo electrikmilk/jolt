@@ -1,24 +1,24 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/3/2022 17:10
+ * Last Modified: 8/3/2022 17:59
  */
 
-function successful( $message )
+function successful( string $message ): string
 {
     return "\033[32m$message\033[0m";
 }
 
-function banner( $message )
+function banner( string $message ): string
 {
     $cols = (int)shell_exec( "tput cols" );
-    if ( $cols !== 0 ) { // for file watchers
+    if ( $cols !== 0 ) {
         $cols = round( $cols / 2 ) - ( strlen( $message ) + 4 );
     }
     return str_repeat( '-', $cols )." [$message] ".str_repeat( '-', $cols )."\n";
 }
 
-function generate_copyright()
+function generate_copyright(): string
 {
     return "/*
  * Copyright (c) 2022 Brandon Jordan
