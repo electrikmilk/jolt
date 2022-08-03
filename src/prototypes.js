@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 /* Strings */
 String.prototype.listAdd = function (value, separator = ',') {
 	let values = this.split(separator);

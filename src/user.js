@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/3/2022 16:34
+ */
+
 let User = {
 	language: navigator.language,
 	browser: {name: null, version: null, fullVersion: null, headless: false, webview: false, bot: false},

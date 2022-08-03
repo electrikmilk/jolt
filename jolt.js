@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: August 2, 2022 at 22:37
+ * Last Modified: August 3, 2022 21:11:15
+ */
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
  */
 
 let App = {
@@ -204,12 +208,18 @@ let App = {
 	}
 };
 /* attributes */
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('click', function (value, node) {
 	makeEvent('click',value,node);
 });
 App.registerReactiveAttribute('change', function (value, node) {
 	makeEvent('change',value,node);
 });
+
 function makeEvent(type,value,node) {
 	if (!App.events.includes(node)) {
 		let functionName = value.split('(')[0];
@@ -235,6 +245,11 @@ function makeEvent(type,value,node) {
 		}
 	}
 }
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('foreach', function (value, node) {
 	let copyNode = node;
 	if (node.parentNode.id === '') {
@@ -268,6 +283,11 @@ App.registerLoop(function () {
 		}
 	});
 });
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('html', function (value, node) {
 	if (App.Data(value)) {
 		const nonHTMLTags = [
@@ -287,6 +307,11 @@ App.registerReactiveAttribute('html', function (value, node) {
 		App.error('[html] Data property \'' + value + '\' does not exist.', node);
 	}
 });
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('model', function (value, node) {
 	if (Object.keys(App.data).includes(value)) {
 		if (node.nodeName === 'INPUT' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
@@ -416,6 +441,11 @@ App.registerReactiveAttribute('model', function (value, node) {
 		App.error('[model] Data property \'' + value + '\' does not exist.', node);
 	}
 });
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerAttribute('prevent', function (element) {
 	let prevent = element.attributes.prevent.value;
 	switch (prevent) {
@@ -426,6 +456,11 @@ App.registerAttribute('prevent', function (element) {
 			break;
 	}
 });
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('toggle', function (value, node) {
 	if (!App.events.includes(value)) {
 		if (document.querySelector(value).length !== 0) {
@@ -453,6 +488,11 @@ App.registerReactiveAttribute('eval', function (value, node) {
 		node.innerText = result;
 	}
 });
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 function escape(unsafe) {
 	if (unsafe === null) {
 		return unsafe;
@@ -475,6 +515,7 @@ function escape(unsafe) {
 		}
 	});
 }
+
 function getAttributes(element) {
 	let attrs = [];
 	for (let attr in element.attributes) {
@@ -485,6 +526,11 @@ function getAttributes(element) {
 	}
 	return attrs;
 }
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 window.onload = () => {
 	User.getAgent();
 	App.start();
@@ -494,6 +540,11 @@ window.onload = () => {
 	}, 100);
 };
 /* nodes */
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerNode('eval', function (node) {
 	if (node.id === '') {
 		node.id = App.random.id('id');
@@ -513,6 +564,12 @@ App.registerLoop(function () {
 		}
 	}
 });
+
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerNode('model', function (node) {
 	if (node.id === '') {
 		node.id = App.random.id('id');
@@ -539,6 +596,11 @@ App.registerLoop(function () {
 		}
 	}
 });
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 /* Strings */
 String.prototype.listAdd = function (value, separator = ',') {
 	let values = this.split(separator);
@@ -596,20 +658,7 @@ String.prototype.trimSuffix = function (phrase) {
 String.prototype.stripTags = function () {
 	return this.toString().replace(/<\/?[^>]+(>|$)/gi, '');
 };
-String.prototype.stripTagsExcept = function (allowed) {
-	let regExp = /<\/?[^>]+(>|$)/g;
-	let str = this.toString();
-	if (!allowed) {
-		return str.replace(regExp, '');
-	}
-	allowed = allowed.split(',');
-	let matches = str.match(regExp);
-	matches.forEach(function (match) {
-		tag = match.match(/<(.*?)>/g)[0];
-		if (!allowed.includes(tag)) {
-		}
-	});
-};
+
 /* Arrays */
 Array.prototype.end = () => this[this.length - 1];
 Array.prototype.pluck = function (key) {
@@ -639,7 +688,13 @@ Array.prototype.removeAll = function (value) {
 		}
 	}
 };
+
 /* tags */
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerTag('shortcut', (element) => {
 	if (element.innerText) {
 		if (User.platform.name !== 'windows' && User.platform.name !== 'macos') {
@@ -649,6 +704,7 @@ App.registerTag('shortcut', (element) => {
 		}
 	}
 });
+
 function makeShortcut(shortcut, platform) {
 	let platformSymbols = {
 		'macos': {
@@ -712,6 +768,11 @@ function makeShortcut(shortcut, platform) {
 		});
 	return '<kbd>' + keys.join('</kbd> + <kbd>') + '</kbd>';
 }
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/3/2022 16:34
+ */
+
 let User = {
 	language: navigator.language,
 	browser: {name: null, version: null, fullVersion: null, headless: false, webview: false, bot: false},

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerNode('model', function (node) {
 	if (node.id === '') {
 		node.id = App.random.id('id');

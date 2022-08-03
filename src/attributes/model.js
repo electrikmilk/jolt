@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('model', function (value, node) {
 	if (Object.keys(App.data).includes(value)) {
 		if (node.nodeName === 'INPUT' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('toggle', function (value, node) {
 	if (!App.events.includes(value)) {
 		if (document.querySelector(value).length !== 0) {

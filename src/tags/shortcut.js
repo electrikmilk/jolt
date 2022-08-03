@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerTag('shortcut', (element) => {
 	if (element.innerText) {
 		if (User.platform.name !== 'windows' && User.platform.name !== 'macos') {

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('html', function (value, node) {
 	if (App.Data(value)) {
 		const nonHTMLTags = [

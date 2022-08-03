@@ -2,11 +2,20 @@
 
 A simple reactive Javascript framework.
 
-Combine JS files:
+Jolt is developed in multiple files and directories in source directory to keep development simple. If you make a
+change you combine all the files into one using the command:
 
 ```console
-php mix.php
+php jolt mix
 ```
+
+You'll then have a new version of `jolt.js`. Minify this file using the command:
+
+```console
+php jolt min
+```
+
+You should then have a new version of `jolt.min.js`.
 
 ---
 
@@ -22,9 +31,14 @@ App.create({
 	},
 	functions: {
 		sayGoodbye: () => {
+			// Safely access/check for data using the App.Data() method
 			let previousMessage = App.Data('message');
+
+			// Multiple ways to set data:
 			App.data.message = 'Goodbye, World!';
 			App.Data('message', 'Goodbye');
+
+			// Set multiple data properties using one method
 			App.Data({
 				message: 'Goodbye'
 			});
@@ -115,17 +129,14 @@ Inline model a property:
 
 ## Hackable
 
-Create your own custom tags:
+Create your own tags:
 
 ```javascript
 App.registerTag('tag', (node) => {
 	// do stuff with node object...
 });
-```
 
-Create your own nodes (reactive tags):
-
-```javascript
+// Reactive tags
 App.registerNode('tag', function (node) {
 	// do stuff with node object...
 });
@@ -144,26 +155,37 @@ App.registerReactiveAttribute('attribute', function (value, node) {
 });
 ```
 
+Run custom code during the main loop:
+
+```javascript
+App.registerLoop(function () {
+	// do stuff every time we loop
+});
+```
+
 ## Prototypes
 
- - String
-   - `listAdd(value,separator)`
-   - `listRemove(value,separator)`
-   - `trimChar(character)`
-   - `trimPrefix(str)`
-   - `trimSuffix(str)`
-   - `stripTags()`
- - Array
-   - `end()`
-   - `pluck(key)`
-   - `remove(key)`
-   - `removeAll(key)`
+- String
+    - `listAdd(value,separator)` - Add item to a comma (or other seperator) seperated string
+    - `listRemove(value,separator)` - Remove item from a comma (or other seperator) seperated string
+    - `trimChar(character)` - Trim specific character from string
+    - `trimPrefix(str)` - Trim specific prefix from beginning of string
+    - `trimSuffix(str)` - Trim specific suffix from end of string
+    - `stripTags()` - Strip all HTML tags from string
+- Array
+    - `end()` - Get last item of array
+    - `pluck(key)` - Pluck values of a key into a new array
+    - `remove(key)` - Remove item from array by key
+    - `removeAll(key)` - Remove all items from array with key
 
 ## Helper methods
 
 ```javascript
-App.random.id(optional: prefix)
-App.random.number(max)
+App.random.id(optional
+:
+prefix
+) // Create random GUID, add optional prefix
+App.random.number(max) // Generate random number, 0 is min, specify your max
 ```
 
 ## User Object
@@ -171,24 +193,58 @@ App.random.number(max)
 ```javascript
 // example
 {
-   "language": "en-US",
-   "browser": {
-        "name": "chrome",
-        "version": "103",
-        "fullVersion": "103.0.0",
-        "headless": false,
-        "webview": false,
-        "bot": false
-   },
-   "engine": {
-       "name": "blink", 
-       "version": "103",
-       "fullVersion": "103.0.0"
-   },
-   "platform": {
-        "name": "macos",
-        "mobile": false,
-        "version": null
-   }
+	"language"
+:
+	"en-US",
+		"browser"
+:
+	{
+		"name"
+	:
+		"chrome",
+			"version"
+	:
+		"103",
+			"fullVersion"
+	:
+		"103.0.0",
+			"headless"
+	:
+		false,
+			"webview"
+	:
+		false,
+			"bot"
+	:
+		false
+	}
+,
+	"engine"
+:
+	{
+		"name"
+	:
+		"blink",
+			"version"
+	:
+		"103",
+			"fullVersion"
+	:
+		"103.0.0"
+	}
+,
+	"platform"
+:
+	{
+		"name"
+	:
+		"macos",
+			"mobile"
+	:
+		false,
+			"version"
+	:
+		null
+	}
 }
 ```

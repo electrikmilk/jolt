@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022 Brandon Jordan
+ * Last Modified: 8/2/2022 23:4
+ */
+
 App.registerReactiveAttribute('foreach', function (value, node) {
 	let copyNode = node;
 	if (node.parentNode.id === '') {
