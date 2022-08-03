@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: August 3, 2022 21:11:15
+ * Last Modified: August 3, 2022 21:50:50
  */
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 let App = {
@@ -25,7 +25,7 @@ let App = {
 	ready: () => null,
 	start: () => {
 		App.tags.forEach(function (tag) {
-			const tags = document.querySelectorAll(tag.name);
+			const tags = $(tag.name);
 			if (tags && tags.length !== 0) {
 				tags.forEach(function (element) {
 					tag.callback(element);
@@ -33,7 +33,7 @@ let App = {
 			}
 		});
 		App.attributes.forEach(function (attr) {
-			const tags = document.querySelectorAll('[' + attr.name + ']');
+			const tags = $('[' + attr.name + ']');
 			if (tags && tags.length !== 0) {
 				tags.forEach(function (element) {
 					tag.callback(element);
@@ -247,7 +247,7 @@ function makeEvent(type,value,node) {
 }
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 App.registerReactiveAttribute('foreach', function (value, node) {
@@ -273,7 +273,7 @@ App.registerLoop(function () {
 	App.fors.forEach(function (loop) {
 		if (App.Data(loop.property) && Array.isArray(App.data[loop.property])) {
 			let list = '';
-			const parent = document.querySelector('#' + loop.parent);
+			const parent = $('#' + loop.parent);
 			App.data[loop.property].forEach(function (item) {
 				list += loop.node.replaceAll(loop.replace, item);
 			});
@@ -458,15 +458,15 @@ App.registerAttribute('prevent', function (element) {
 });
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 App.registerReactiveAttribute('toggle', function (value, node) {
 	if (!App.events.includes(value)) {
-		if (document.querySelector(value).length !== 0) {
+		if ($(value).length !== 0) {
 			node.onclick = () => {
-				if (document.querySelector(value).length !== 0) {
-					document.querySelector(value).style.display = document.querySelector(value).style.display === 'none' ? 'block' : 'none';
+				if ($(value).length !== 0) {
+					$(value).style.display = $(value).style.display === 'none' ? 'block' : 'none';
 				}
 			};
 			App.events.push(value);
@@ -490,8 +490,19 @@ App.registerReactiveAttribute('eval', function (value, node) {
 });
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:49
  */
+
+function $(selector) {
+	let selection = document.querySelectorAll(selector);
+	if (selection.length === 1) {
+		return document.querySelector(selector);
+	} else if (selection.length === 0) {
+		return null;
+	} else {
+		return selection;
+	}
+}
 
 function escape(unsafe) {
 	if (unsafe === null) {
@@ -567,7 +578,7 @@ App.registerLoop(function () {
 
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 App.registerNode('model', function (node) {
@@ -588,8 +599,8 @@ App.registerNode('model', function (node) {
 App.registerLoop(function () {
 	for (let tag in App.modelTags) {
 		let property = App.modelTags[tag];
-		if (Object.keys(App.data).includes(property) && document.querySelector('#' + tag)) {
-			let modelElement = document.querySelector('#' + tag);
+		if (Object.keys(App.data).includes(property) && $('#' + tag)) {
+			let modelElement = $('#' + tag);
 			if (modelElement.innerText !== escape(App.data[property])) {
 				modelElement.innerText = App.data[property];
 			}

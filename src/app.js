@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 let App = {
@@ -21,7 +21,7 @@ let App = {
 	ready: () => null,
 	start: () => {
 		App.tags.forEach(function (tag) {
-			const tags = document.querySelectorAll(tag.name);
+			const tags = $(tag.name);
 			if (tags && tags.length !== 0) {
 				tags.forEach(function (element) {
 					tag.callback(element);
@@ -29,7 +29,7 @@ let App = {
 			}
 		});
 		App.attributes.forEach(function (attr) {
-			const tags = document.querySelectorAll('[' + attr.name + ']');
+			const tags = $('[' + attr.name + ']');
 			if (tags && tags.length !== 0) {
 				tags.forEach(function (element) {
 					tag.callback(element);

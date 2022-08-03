@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 App.registerNode('model', function (node) {
@@ -21,8 +21,8 @@ App.registerNode('model', function (node) {
 App.registerLoop(function () {
 	for (let tag in App.modelTags) {
 		let property = App.modelTags[tag];
-		if (Object.keys(App.data).includes(property) && document.querySelector('#' + tag)) {
-			let modelElement = document.querySelector('#' + tag);
+		if (Object.keys(App.data).includes(property) && $('#' + tag)) {
+			let modelElement = $('#' + tag);
 			if (modelElement.innerText !== escape(App.data[property])) {
 				modelElement.innerText = App.data[property];
 			}

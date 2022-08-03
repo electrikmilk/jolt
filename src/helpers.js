@@ -1,7 +1,18 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:49
  */
+
+function $(selector) {
+	let selection = document.querySelectorAll(selector);
+	if (selection.length === 1) {
+		return document.querySelector(selector);
+	} else if (selection.length === 0) {
+		return null;
+	} else {
+		return selection;
+	}
+}
 
 function escape(unsafe) {
 	if (unsafe === null) {

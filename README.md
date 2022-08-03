@@ -47,6 +47,12 @@ App.create({
 });
 ```
 
+## Select
+
+```javascript
+$('#element') // returns element object(s)
+```
+
 ## Attributes
 
 Model a property:

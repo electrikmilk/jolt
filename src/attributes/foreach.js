@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/2/2022 23:4
+ * Last Modified: 8/3/2022 17:45
  */
 
 App.registerReactiveAttribute('foreach', function (value, node) {
@@ -26,7 +26,7 @@ App.registerLoop(function () {
 	App.fors.forEach(function (loop) {
 		if (App.Data(loop.property) && Array.isArray(App.data[loop.property])) {
 			let list = '';
-			const parent = document.querySelector('#' + loop.parent);
+			const parent = $('#' + loop.parent);
 			App.data[loop.property].forEach(function (item) {
 				list += loop.node.replaceAll(loop.replace, item);
 			});
