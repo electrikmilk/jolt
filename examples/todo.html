@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Todo App</title>
+
+	<link rel="stylesheet" href="../mixed.css"/>
+	<script type="text/javascript" src="../mixed.js"></script>
+
+	<script>
+		App.create({
+			data: {
+				newTask: null,
+				tasks: ['Butter', 'Milk', 'Eggs']
+			},
+			functions: {
+				add: () => {
+					if (App.data.newTask !== '' && App.data.newTask !== null) {
+						App.data.tasks.push(App.data.newTask);
+						App.data.newTask = null;
+					}
+				},
+				remove: (task) => {
+					App.data.tasks.remove(task);
+				}
+			}
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<input type="text" model="newTask"/>
+		<button click="add">Add</button>
+	</div>
+	<ul>
+		<li foreach="task in tasks">{task}
+			<button click="remove('{task}')">&times;</button>
+		</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Random User</title>
+
+	<script type="text/javascript" src="../mixed.js"></script>
+
+	<script>
+		App.create({
+			ready: () => {
+				App.functions.get();
+			},
+			data: {
+				photo: null,
+				name: null,
+				username: null,
+				email: null,
+				busy: true
+			},
+			functions: {
+				get: async () => {
+					App.data.busy = true;
+					await fetch('https://random-data-api.com/api/users/random_user')
+						.then(response => response.json())
+						.then((response) => {
+							App.Data({
+								busy: false,
+								name: response['first_name'] + ' ' + response['last_name'],
+								username: response['username'],
+								email: response['email'],
+								photo: 'https://thispersondoesnotexist.com/image?refresh=' + App.random.id()
+							});
+						})
+						.catch((error) => {
+							App.data.busy = false;
+							console.error(error);
+						});
+				}
+			}
+		});
+	</script>
+</head>
+<body>
+	<div if="busy">Loading...</div>
+	<div if="!busy">
+		<img .src="{photo}" width="100"/>
+		<h3 model="name"></h3>
+		<p model="username"></p>
+		<p model="email"></p>
+		<button click="get">New Person</button>
+	</div>
+</body>
+</html>

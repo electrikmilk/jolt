@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Framework</title>
+
+	<script type="text/javascript" src="../mixed.js"></script>
+
+	<script>
+		App.create({
+			ready: () => {
+				console.log('ready!');
+			},
+			data: {
+				message: 'Hello!',
+				html: '<strong>bold text</strong>',
+				count: 1,
+				show: false,
+				item: null,
+				list: ['item 1', 'item 2', 'item 3'],
+				multiarray: [['item1', 'item 2', 'item 3'], ['item1', 'item 2', 'item 3'], ['item1', 'item 2', 'item 3']],
+				multi: [{column1: 1, column2: 2}, {column1: 2, column2: 3}, {column1: 3, column2: 4}],
+				group: {a: ['item 1', 'item 2', 'item 3'], b: 2, c: 3}
+			},
+			functions: {
+				count: () => {
+					App.data.count += 1;
+				},
+				remove: (item) => {
+					let index = App.data.list.indexOf(item);
+					if (index > -1) {
+						App.data.list.splice(index, 1);
+					}
+				}
+			}
+		});
+	</script>
+
+</head>
+<body>
+	<p>You just press
+		<shortcut>super + c</shortcut>
+		, then it copies the text.
+	</p>
+
+	<p>Then press
+		<shortcut>super + shift + a</shortcut>
+		.
+	</p>
+
+	<p>Press
+		<shortcut>up + down + left + right + delete + alt + control + command</shortcut>
+		, easy.
+	</p>
+
+	<p>Then, just press
+		<shortcut>escape</shortcut>
+	</p>
+
+	<p>
+		Press
+		<shortcut>shift + enter</shortcut>
+		.
+	</p>
+	<p>
+		<shortcut>ctrl + alt + delete</shortcut>
+	</p>
+	<div html="html"></div>
+	<select model="item">
+		<option foreach="item in list" value="{item}">{item}</option>
+	</select>
+	<p>You selected:
+		<model>item</model>
+	</p>
+	<div>
+		<spinner if="show"></spinner>
+		<spinner small></spinner>
+	</div>
+	<table model="group"></table>
+	<table model="multi"></table>
+	<table model="multiarray"></table>
+	<ul model="list"></ul>
+	<h3 model="count"></h3>
+	<ul>
+		<li foreach="item in list">Item: {item}
+			<button click="remove('{item}')">&times;</button>
+		</li>
+	</ul>
+	<div>
+		<button foreach="item in list">{item}</button>
+	</div>
+	<button type="submit" click="count">Click me!</button>
+	<button type="submit" toggle="#myMessage">Toggle Message</button>
+	<div id="myMessage" model="message"></div>
+	<br/>
+	<input type="text" model="message"/><br/>
+	<input type="text" model="count"/><br/>
+	<input type="text" model="count"/><br/>
+	<input type="range" model="count" max="100" min="1" step="1"/><br/>
+	<div if="show">I'm here because show is true!</div>
+	<input type="checkbox" model="show"/>
+
+	<p>
+		<model>count</model>
+		* 5 =
+		<eval>count*5</eval>
+	</p>
+</body>
+</html>
