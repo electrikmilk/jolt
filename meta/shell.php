@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/3/2022 17:59
+ * Last Modified: 8/5/2022 0:37
  */
 
 function successful( string $message ): string
@@ -31,11 +31,17 @@ if ( $argc > 1 ) {
         include_once 'meta/minifier.php';
     } elseif ( $argv[ 1 ] === "mix" ) {
         include_once 'meta/mix.php';
+    } elseif ( $argv[ 1 ] === "build" ) {
+        echo successful( 'Compiling... ' );
+        echo shell_exec( "tsc" );
+        echo successful( 'done!' )."\n";
+        include_once 'meta/minifier.php';
     }
 } else {
     $commands = [
-        'mix' => 'Combine files in the source directory into jolt.js',
-        'min' => 'Minify jolt.js'
+        'build' => 'Run tsc && php jolt min',
+        'min'   => 'Minify jolt.js',
+        'mix'   => 'Combine files in src into jolt.ts'
     ];
     echo "\033[32mUSAGE:\033[0m\n";
     foreach ( $commands as $command => $description ) {

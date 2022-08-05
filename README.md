@@ -1,21 +1,6 @@
 # Jolt
 
-A simple reactive Javascript framework.
-
-Jolt is developed in multiple files and directories in source directory to keep development simple. If you make a
-change you combine all the files into one using the command:
-
-```console
-php jolt mix
-```
-
-You'll then have a new version of `jolt.js`. Minify this file using the command:
-
-```console
-php jolt min
-```
-
-You should then have a new version of `jolt.min.js`.
+Reactive Javascript framework.
 
 ---
 
@@ -253,4 +238,21 @@ App.random.number(max) // Generate random number, 0 is min, specify your max
 		null
 	}
 }
+```
+
+## Build
+
+Jolt is developed in multiple files and directories in source directory to keep development simple. Therefore, it must
+be compiled.
+
+Compile into jolt.js into a build directory:
+
+```console
+tsc
+```
+
+Compile and minify a `jolt.js` into a build directory:
+
+```console
+php jolt build
 ```

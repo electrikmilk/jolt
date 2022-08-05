@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/3/2022 18:0
+ * Last Modified: 8/3/2022 18:32
  */
 
 function getMinified( string $content ): bool|string|null
@@ -25,11 +25,11 @@ function getMinified( string $content ): bool|string|null
     return $minified;
 }
 
-$minify = getMinified( file_get_contents( 'jolt.js' ) );
+$minify = getMinified( file_get_contents( 'build/jolt.js' ) );
 if ( $minify !== null ) {
-    if ( ! file_put_contents( 'jolt.min.js', generate_copyright().$minify ) ) {
+    if ( ! file_put_contents( 'build/jolt.min.js', generate_copyright().$minify ) ) {
         die( "Error! Unable to save minified version." );
     }
     
-    echo successful( 'Minified jolt.js!' )."\n";
+    echo successful( 'Created jolt.min.js!' )."\n";
 }
