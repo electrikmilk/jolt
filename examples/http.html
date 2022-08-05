@@ -1,0 +1,35 @@
+<!--
+  ~ Copyright (c) 2022 Brandon Jordan
+  ~ Last Modified: 8/5/2022 16:35
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTTP API Test</title>
+
+	<script type="text/javascript" src="../build/jolt.min.js"></script>
+
+	<script>
+		App.create({
+			ready: () => {
+				HTTP.get('request.php',
+					{
+						responseType: 'json',
+						data: {
+							key: 'value'
+						}
+					}).then((response) => {
+					console.log(response);
+				}).catch((error) => {
+					console.error(error);
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>
