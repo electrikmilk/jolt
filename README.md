@@ -4,6 +4,8 @@ Reactive Javascript framework.
 
 ---
 
+## Getting started
+
 Example app:
 
 ```javascript
@@ -35,7 +37,8 @@ App.create({
 ## Select
 
 ```javascript
-$('#element') // returns element object(s)
+$('#element') // returns element object
+$all('#element') // returns element object(s)
 ```
 
 ## Attributes
@@ -181,71 +184,86 @@ App.random.number(max) // Generate random number, 0 is min, specify your max
 
 ## User Object
 
-```javascript
-// example
+You can access the `User` object at any time to check your user's browser info and more!
+
+```json
 {
-	"language"
-:
-	"en-US",
-		"browser"
-:
-	{
-		"name"
-	:
-		"chrome",
-			"version"
-	:
-		"103",
-			"fullVersion"
-	:
-		"103.0.0",
-			"headless"
-	:
-		false,
-			"webview"
-	:
-		false,
-			"bot"
-	:
-		false
-	}
-,
-	"engine"
-:
-	{
-		"name"
-	:
-		"blink",
-			"version"
-	:
-		"103",
-			"fullVersion"
-	:
-		"103.0.0"
-	}
-,
-	"platform"
-:
-	{
-		"name"
-	:
-		"macos",
-			"mobile"
-	:
-		false,
-			"version"
-	:
-		null
-	}
+  "language": "en-US",
+  "browser": {
+    "name": "chrome",
+    "version": "103",
+    "fullVersion": "103.0.0",
+    "headless": false,
+    "webview": false,
+    "bot": false
+  },
+  "engine": {
+    "name": "blink",
+    "version": "103",
+    "fullVersion": "103.0.0"
+  },
+  "platform": {
+    "name": "macos",
+    "mobile": false,
+    "version": null
+  }
 }
+```
+
+## HTTP Requests
+
+```javascript
+// Returns an instance of HTTPRequest
+let request = HTTP.request('GET', '/api/endpoint', {
+    responseType: 'json',
+    data: {
+        key: 'value'
+    },
+    headers: {
+        'header':'content'
+    }
+});
+
+// Send the request, returns a promise
+request.send().then((response) => {
+    console.log(response.data);
+    console.log(response.type);
+    console.log(response.status);
+    console.log(response.statusText);
+}).catch((error) => {
+    console.error(error);
+});
+
+request.progress(function (percent) {
+    console.log(`${percent}%`);
+});
+```
+
+### Shorthands
+
+```javascript
+// Example shorthand:
+HTTP.get(url,{options})
+    .then((response) => console.log(response))
+    .catch((error)=>console.error(error));
+
+// ...and so on:
+HTTP.post(url,{options}) // => Promise
+HTTP.put(url,{options}) // => Promise
+HTTP.patch(url,{options}) // => Promise
+HTTP.delete(url,{options}) // => Promise
+
+// Simplest
+get(url)
+    .then((response) => console.log(response))
+    .catch((error)=>console.error(error));
 ```
 
 ## Build
 
-Jolt is developed in multiple files and directories in source directory to keep development simple. Therefore, it must
-be compiled.
+Jolt is not only written in TypeScript, but in multiple files and directories in /src/ to keep development organized. Therefore, it must be combined and compiled.
 
-Compile into jolt.js into a build directory:
+Compile into `jolt.js` into a build directory:
 
 ```console
 tsc
