@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 0:37
+ * Last Modified: 8/5/2022 17:6
  */
 
 function successful( string $message ): string
@@ -21,6 +21,7 @@ function banner( string $message ): string
 function generate_copyright(): string
 {
     return "/*
+ * Jolt Framework ⚡
  * Copyright (c) 2022 Brandon Jordan
  * Last Modified: ".date( 'F j, Y H:i:s' )."
  */\n";
@@ -32,9 +33,7 @@ if ( $argc > 1 ) {
     } elseif ( $argv[ 1 ] === "mix" ) {
         include_once 'meta/mix.php';
     } elseif ( $argv[ 1 ] === "build" ) {
-        echo successful( 'Compiling... ' );
-        echo shell_exec( "tsc" );
-        echo successful( 'done!' )."\n";
+        include_once 'meta/build.php';
         include_once 'meta/minifier.php';
     }
 } else {
