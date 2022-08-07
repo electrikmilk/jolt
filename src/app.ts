@@ -58,6 +58,7 @@ interface App {
     replaces: Array<Loop>,
     modelTags: Array<string>
     context: Array<string>,
+    urlParams: Array<string>,
     ready: Function,
     start: Function,
     create: (app: App) => void,
@@ -71,7 +72,8 @@ interface App {
     registerNode: (nodeName: string, callback: (node: HTMLElement) => void) => void,
     registerTag: (tagName: string, callback: (element: HTMLElement) => void) => void,
     registerLoop: (callback: Function) => void,
-    Data: (key: string, value: any) => string | null | undefined | boolean,
+    Data: (key: string, value: any) => any | boolean,
+    Get: (key: string) => any | boolean,
     random: randomFunctions
 }
 
@@ -90,6 +92,7 @@ let App: App = {
     replaces: [],
     modelTags: [],
     context: [],
+    urlParams: [],
     ready: () => null,
     start: () => {
         App.tags.forEach(function (tag: Callback) {
@@ -108,6 +111,15 @@ let App: App = {
                 });
             }
         });
+        let url = window.location.href;
+        if(url.includes('?')) {
+            let kvs = window.location.href.split('?')[1].split('&');
+            kvs.forEach(function(value) {
+                let param = value.split('=');
+                // @ts-ignore
+                App.urlParams[param[0]] = param[1];
+            });
+        }
     },
     create: function (app: App) {
         if (app.ready && typeof app.ready === 'function') {
@@ -265,7 +277,7 @@ let App: App = {
     registerLoop: function (callback: Function) {
         this.loops.push(callback);
     },
-    Data: (key: string, value?: any): string | null | undefined | boolean => {
+    Data: (key: string, value?: any): any | boolean => {
         if (key.constructor === Object) {
             // @ts-ignore
             for (let k in key) {
@@ -282,6 +294,14 @@ let App: App = {
         } else if (typeof value !== 'undefined') {
             // @ts-ignore
             return App.data[key] = value;
+        }
+    },
+    Get: (key: string): string | null | undefined | boolean => {
+        if (Object.keys(App.urlParams).includes(key)) {
+            // @ts-ignore
+            return App.urlParams[key];
+        } else {
+            return false;
         }
     },
     random: {
