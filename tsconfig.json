@@ -104,11 +104,6 @@
     "skipLibCheck": true,
     "outFile": "build/jolt.js"
   },
-  "exclude": [
-    "build",
-    "meta",
-    "examples"
-  ],
   "include": [
     "src/**/*"
   ]
