@@ -1,37 +1,36 @@
-## Welcome to GitHub Pages
+<h1>&#9889; Jolt</h1>
+<p>Reactive Javascript Utility Framework</p>
+<a href='https://github.com/electrikmilk/jolt/wiki'>Docs</a>
 
-You can use the [editor on GitHub](https://github.com/electrikmilk/jolt/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## DO
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Be easy to learn
+- Keep things simple
+- Memorable APIs
+- Create abstractions that make life easier for the developer
+- Use dependencies only when absolutely necessary
 
-### Markdown
+## DON'T
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Add unnecessary bloat that a few devs will use (DIY!)
+- Create the next fully featured framework for huge websites
+- Create unnecessarily complex abstractions, APIs, and tools
+- Add bloating, unnecessary, needlessly complex dependencies
 
-```markdown
-Syntax highlighted code block
+# Build
 
-# Header 1
-## Header 2
-### Header 3
+Jolt is not only written in TypeScript, but in multiple files and directories in /src/ to keep development organized. Therefore, it must be combined and compiled.
 
-- Bulleted
-- List
+Compile into `jolt.js` in a build directory:
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```console
+tsc
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+**OR**
 
-### Jekyll Themes
+Compile and minify the `jolt.js` file you just created into the same build directory:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/electrikmilk/jolt/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+```console
+php jolt build
+```
