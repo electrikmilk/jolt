@@ -1,5 +1,5 @@
 <div align=center>
-  <h1>⚡️<br>Jolt</h1>
+  <h1>&#9889;<br>Jolt</h1>
   <p>Reactive Javascript Utility Framework</p>
   <a href='https://github.com/electrikmilk/jolt/wiki'>Docs</a>
 </div>
