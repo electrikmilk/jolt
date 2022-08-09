@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/4/2022 23:57
+ * Last Modified: 8/9/2022 10:5
  */
 
-App.registerNode('eval', function (node: HTMLElement) {
+App.registerReactiveTag('eval', function (node: HTMLElement) {
     if (node.id === '') {
         node.id = App.random.id('id');
     }

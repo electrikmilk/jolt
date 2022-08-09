@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 10:49
+ * Last Modified: 8/9/2022 10:5
  */
 
-App.registerNode('model', function (node: HTMLElement) {
+App.registerReactiveTag('model', function (node: HTMLElement) {
     if (node.id === '') {
         node.id = App.random.id('id');
     }

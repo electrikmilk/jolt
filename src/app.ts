@@ -69,7 +69,7 @@ interface App {
     loop: (node: HTMLElement) => void,
     registerReactiveAttribute: (attribute: string, callback: (value: string, node: HTMLElement) => void) => void,
     registerAttribute: (attribute: string, callback: (value: string, node: HTMLElement) => void) => void,
-    registerNode: (nodeName: string, callback: (node: HTMLElement) => void) => void,
+    registerReactiveTag: (nodeName: string, callback: (node: HTMLElement) => void) => void,
     registerTag: (tagName: string, callback: (element: HTMLElement) => void) => void,
     registerLoop: (callback: Function) => void,
     Data: (key: string, value: any) => any | boolean,
@@ -263,7 +263,7 @@ let App: App = {
             this.attributes[attribute] = callback;
         }
     },
-    registerNode: function (nodeName: string, callback: (node: HTMLElement) => void) {
+    registerReactiveTag: function (nodeName: string, callback: (node: HTMLElement) => void) {
         nodeName = nodeName.toUpperCase();
         // @ts-ignore
         if (!this.nodes.includes(nodeName)) {
