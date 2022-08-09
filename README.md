@@ -21,9 +21,9 @@
 
 # Build
 
-Jolt is not only written in TypeScript, but in multiple files and directories in /src/ to keep development organized. Therefore, it must be combined and compiled.
+Jolt is not only written in TypeScript, but in multiple files and directories in /src/ to keep development organized. Therefore, it must be combined and compiled. Either of these commands will create a /build/ directory.
 
-Compile into `jolt.js` in a build directory:
+Compile to create `build/jolt.js`:
 
 ```console
 tsc
@@ -31,7 +31,7 @@ tsc
 
 **OR**
 
-Compile and minify the `jolt.js` file you just created into the same build directory:
+Compile and minify to create `build/jolt.min.js`:
 
 ```console
 php jolt build
