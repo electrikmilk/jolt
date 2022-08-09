@@ -1,6 +1,6 @@
-<h1>&#9889; Jolt</h1>
-<p>Reactive Javascript Utility Framework</p>
-<a href='https://github.com/electrikmilk/jolt/wiki'>Docs</a>
+<p align="center"><a href='https://github.com/electrikmilk/jolt/wiki'>Documentation</a></p>
+
+---
 
 ## DO
 
