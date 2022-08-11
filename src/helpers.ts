@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/10/2022 22:37
+ * Last Modified: 8/10/2022 22:56
  */
 
 let Random: Random = {
@@ -55,4 +55,17 @@ function getAttributes(element: HTMLElement) {
         }
     }
     return attrs;
+}
+
+function tempElement(tagName: string, attributes: Object) {
+    let temp = document.createElement(tagName);
+    if (attributes) {
+        for (let attribute in attributes) {
+            // @ts-ignore
+            temp[attribute] = attributes[attribute];
+        }
+    }
+    temp.style.display = 'none';
+    $("body")?.appendChild(temp);
+    return temp;
 }
