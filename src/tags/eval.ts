@@ -1,11 +1,11 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/9/2022 10:5
+ * Last Modified: 8/10/2022 21:13
  */
 
 App.registerReactiveTag('eval', function (node: HTMLElement) {
     if (node.id === '') {
-        node.id = App.random.id('id');
+        node.id = Random.id('id');
     }
     if (!Object.keys(App.evals).includes(node.id)) {
         // @ts-ignore

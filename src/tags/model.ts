@@ -5,7 +5,7 @@
 
 App.registerReactiveTag('model', function (node: HTMLElement) {
     if (node.id === '') {
-        node.id = App.random.id('id');
+        node.id = Random.id('id');
     }
     if (!Object.keys(App.modelTags).includes(node.id)) {
         if (node.innerText) {

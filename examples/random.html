@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/5/2022 10:52
+  ~ Last Modified: 8/10/2022 21:14
   -->
 
 <!doctype html>
@@ -34,7 +34,7 @@
 								name: response['first_name'] + ' ' + response['last_name'],
 								username: response['username'],
 								email: response['email'],
-								photo: 'https://thispersondoesnotexist.com/image?refresh=' + App.random.id()
+								photo: 'https://thispersondoesnotexist.com/image?refresh=' + Random.id()
 							});
 						})
 						.catch((error) => {

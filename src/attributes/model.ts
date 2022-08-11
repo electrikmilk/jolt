@@ -7,7 +7,7 @@ App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
     if (Object.keys(App.data).includes(value)) {
         if (node.nodeName === 'INPUT' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
             if (node.id === '') {
-                node.id = App.random.id('id');
+                node.id = Random.id('id');
             }
             // @ts-ignore
             if (node.type !== 'checkbox' && typeof App.data[value] === 'boolean') {

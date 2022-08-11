@@ -8,7 +8,7 @@ App.registerReactiveAttribute('foreach', function (value, node) {
     // @ts-ignore
     if (node.parentNode.id === '') {
         // @ts-ignore
-        node.parentNode.id = App.random.id('id');
+        node.parentNode.id = Random.id('id');
     }
     // @ts-ignore
     let parentID = node.parentNode.id;

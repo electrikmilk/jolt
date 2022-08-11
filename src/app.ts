@@ -1,47 +1,7 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 10:50
+ * Last Modified: 8/10/2022 21:12
  */
-
-interface tag {
-    name: string,
-    callback: () => void
-}
-
-interface KeyValue {
-    key: string,
-    value: any
-}
-
-interface Callback {
-    name: string,
-    callback: Function
-}
-
-interface AttributeCallback {
-    name: string,
-    callback: (node: HTMLElement) => void
-}
-
-interface Loop {
-    id: string,
-    name: string,
-    value: string
-}
-
-interface randomFunctions {
-    id(prefix: string): string,
-
-    number(max: number): number
-}
-
-interface For {
-    node: string,
-    replace: string,
-    parent: string,
-    property: string,
-    items: Array<any>
-}
 
 interface App {
     data: [],
@@ -74,7 +34,41 @@ interface App {
     registerLoop: (callback: Function) => void,
     Data: (key: string, value: any) => any | boolean,
     Get: (key: string) => any | boolean,
-    random: randomFunctions
+}
+
+interface KeyValue {
+    key: string,
+    value: any
+}
+
+interface Callback {
+    name: string,
+    callback: Function
+}
+
+interface AttributeCallback {
+    name: string,
+    callback: (node: HTMLElement) => void
+}
+
+interface Loop {
+    id: string,
+    name: string,
+    value: string
+}
+
+interface Random {
+    id: (prefix: string) => string,
+    number: (max: number) => number
+    color: () => string
+}
+
+interface For {
+    node: string,
+    replace: string,
+    parent: string,
+    property: string,
+    items: Array<any>
 }
 
 let App: App = {
@@ -112,9 +106,9 @@ let App: App = {
             }
         });
         let url = window.location.href;
-        if(url.includes('?')) {
+        if (url.includes('?')) {
             let kvs = window.location.href.split('?')[1].split('&');
-            kvs.forEach(function(value) {
+            kvs.forEach(function (value) {
                 let param = value.split('=');
                 // @ts-ignore
                 App.urlParams[param[0]] = param[1];
@@ -217,9 +211,9 @@ let App: App = {
                             }
                             if (attribute.split('')[0] === '.') {
                                 if (node.id === '') {
-                                    node.id = App.random.id('id');
+                                    node.id = Random.id('id');
                                 }
-                                let generateId = App.random.id('');
+                                let generateId = Random.id('');
                                 // @ts-ignore
                                 App.replaces[generateId] = {
                                     // @ts-ignore
@@ -303,16 +297,20 @@ let App: App = {
         } else {
             return false;
         }
+    }
+};
+
+let Random: Random = {
+    id: (prefix?: string): string => {
+        let S4 = () => {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        };
+        return prefix + (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
     },
-    random: {
-        id: (prefix?: string): string => {
-            let S4 = () => {
-                return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-            };
-            return prefix + (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
-        },
-        number: (max: number): number => {
-            return Math.floor(Math.random() * max);
-        }
+    number: (max: number): number => {
+        return Math.floor(Math.random() * max);
+    },
+    color: (): string => {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 };
