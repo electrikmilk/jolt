@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/10/2022 21:12
+ * Last Modified: 8/10/2022 22:37
  */
 
 interface App {
@@ -297,20 +297,5 @@ let App: App = {
         } else {
             return false;
         }
-    }
-};
-
-let Random: Random = {
-    id: (prefix?: string): string => {
-        let S4 = () => {
-            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-        };
-        return prefix + (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
-    },
-    number: (max: number): number => {
-        return Math.floor(Math.random() * max);
-    },
-    color: (): string => {
-        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
 };
