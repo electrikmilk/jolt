@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/5/2022 10:52
+  ~ Last Modified: 8/12/2022 17:51
   -->
 
 <!doctype html>
@@ -22,10 +22,24 @@
 				count: 1,
 				show: false,
 				item: null,
+				deepList: {
+					'item 1': {
+						'item 1': [],
+						'item 2': ['item 1'],
+						'item 3': {
+							'item 1': [],
+							'item 2': [],
+							'item 3': ['item 1', 'item 2', 'item 3']
+						}
+					},
+					'item 2': [],
+					'item 3': ['item 1', 'item 2', 'item 3'],
+					'item 4': ['item 1']
+				},
 				list: ['item 1', 'item 2', 'item 3'],
-				multiarray: [['item1', 'item 2', 'item 3'], ['item1', 'item 2', 'item 3'], ['item1', 'item 2', 'item 3']],
+				multiArray: [['item1', 'item 2', 'item 3'], ['item1', 'item 2', 'item 3'], ['item1', 'item 2', 'item 3']],
 				multi: [{column1: 1, column2: 2}, {column1: 2, column2: 3}, {column1: 3, column2: 4}],
-				group: {a: ['item 1', 'item 2', 'item 3'], b: 2, c: 3}
+				group: {a: ['item 1', 'item 2', 'item 3'], b: 2, c: '3', d: false, e: null}
 			},
 			functions: {
 				count: () => {
@@ -81,10 +95,16 @@
 		<spinner if="show"></spinner>
 		<spinner small></spinner>
 	</div>
+	<table model="list"></table>
 	<table model="group"></table>
 	<table model="multi"></table>
-	<table model="multiarray"></table>
+	<table model="multiArray"></table>
+	<p>Array to HTML list:</p>
 	<ul model="list"></ul>
+	<ol model="list"></ol>
+	<p>Object of arrays of objects to HTML list:</p>
+	<ul model="deepList"></ul>
+	<ol model="deepList"></ol>
 	<h3 model="count"></h3>
 	<ul>
 		<li foreach="item in list">Item: {item}
