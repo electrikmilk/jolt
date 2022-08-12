@@ -10,6 +10,7 @@ interface App {
     events: HTMLElement[],
     fors: Array<For>,
     loops: Function[],
+    inits: Function[],
     tags: Array<Callback>,
     nodes: Array<KeyValue>,
     evals: Array<string>
@@ -32,6 +33,7 @@ interface App {
     registerReactiveTag: (nodeName: string, callback: (node: HTMLElement) => void) => void,
     registerTag: (tagName: string, callback: (element: HTMLElement) => void) => void,
     registerLoop: (callback: Function) => void,
+    registerInit: (callback: Function) => void,
     Data: (key: string, value: any) => any | boolean,
     Get: (key: string) => any | boolean,
 }
@@ -78,6 +80,7 @@ let App: App = {
     events: [],
     fors: [],
     loops: [],
+    inits: [],
     tags: [], // static
     nodes: [], // reactive
     evals: [],
@@ -114,6 +117,7 @@ let App: App = {
                 App.urlParams[param[0]] = param[1];
             });
         }
+        App.inits.forEach(callback => callback());
     },
     create: function (app: App) {
         if (app.ready && typeof app.ready === 'function') {
@@ -270,6 +274,9 @@ let App: App = {
     },
     registerLoop: function (callback: Function) {
         this.loops.push(callback);
+    },
+    registerInit: function (callback: Function) {
+        this.inits.push(callback);
     },
     Data: (key: string, value?: any): any | boolean => {
         if (key.constructor === Object) {
