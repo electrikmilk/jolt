@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 17:4
+ * Last Modified: 8/12/2022 13:39
  */
 
-function getMinified( string $content ): bool|string|null
+function getMinified( string $content )
 {
     $url = 'https://www.toptal.com/developers/javascript-minifier/api/raw';
     $ch  = curl_init();
