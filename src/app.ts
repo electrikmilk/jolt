@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/10/2022 22:37
+ * Last Modified: 8/12/2022 17:46
  */
 
 interface App {
@@ -135,13 +135,13 @@ let App: App = {
         if (node) {
             this.errorNodes.push(node);
         }
-        console.error(`[Framework] ${message}`, node, message.stack);
+        console.error(`[Jolt] ${message}`, node, message.stack);
     },
     errorMsg: function (message: string, node: HTMLElement) {
         if (node) {
             this.errorNodes.push(node);
         }
-        console.trace(`[Framework] ${message}`, node);
+        console.trace(`[Jolt] ${message}`, node);
     },
     replacers: function () {
         for (let rep in this.replaces) {
