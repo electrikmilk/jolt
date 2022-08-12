@@ -1,31 +1,37 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 0:10
+ * Last Modified: 8/12/2022 17:50
  */
 
+function modelError(message: string, value: string, node: HTMLElement) {
+    App.errorMsg(`[model="${value}"] ${message}.`, node);
+}
+
 App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
-    if (Object.keys(App.data).includes(value)) {
+    if (!Object.keys(App.data).includes(value)) {
+        modelError(`Data property '${value} does not exist.`, value, node);
+    } else {
         if (node.nodeName === 'INPUT' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
             if (node.id === '') {
                 node.id = Random.id('id');
             }
             // @ts-ignore
             if (node.type !== 'checkbox' && typeof App.data[value] === 'boolean') {
-                App.errorMsg('Only checkbox and radio inputs can model booleans', node);
+                modelError('Only checkboxes can model booleans', value, node);
             }
             // @ts-ignore
             if (!App.events.includes(node.id)) {
                 // @ts-ignore
                 if (node.type === 'checkbox') {
-                    // @ts-ignore
-                    if (typeof App.data[value] === 'boolean') {
-                        node.onchange = () => {
+                    node.onchange = () => {
+                        // @ts-ignore
+                        if (typeof App.data[value] === 'boolean') {
                             // @ts-ignore
                             App.data[value] = node.checked;
-                        };
-                    } else {
-                        App.errorMsg('Checkbox inputs can only model booleans', node);
-                    }
+                        } else {
+                            modelError('Checkboxes can only model booleans', value, node);
+                        }
+                    };
                     // @ts-ignore
                 } else if (node.type === 'range' || node.nodeName === 'SELECT') {
                     node.onchange = () => {
@@ -82,74 +88,111 @@ App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
             }
         } else {
             // @ts-ignore
-            let dataValue = App.data[value];
-            if (dataValue === null) {
-            } else if (Array.isArray(dataValue)) {
-                if (node.nodeName === 'UL' || node.nodeName === 'OL') {
-                    let list = '<li>' + dataValue.join('</li><li>') + '</li>';
-                    if (node.innerHTML !== list) {
-                        node.innerHTML = '';
-                        dataValue.forEach(function (item) {
-                            let listItem = document.createElement('li');
-                            listItem.innerText = item;
-                            node.appendChild(listItem);
-                        });
-                    }
-                } else if (node.nodeName === 'TABLE') {
-                    let table = '';
-                    let arrayOfObjects = false;
-                    dataValue.forEach(function (item) {
-                        if (item.constructor === Object) {
-                            arrayOfObjects = true;
+            let dataValue = App.Data(value);
+            if (dataValue !== null && dataValue !== false) {
+                if (Array.isArray(dataValue)) {
+                    if (node.nodeName === 'UL' || node.nodeName === 'OL') {
+                        let list: string = '<li>' + dataValue.join('</li><li>') + '</li>';
+                        if (node.innerHTML !== list) {
+                            node.innerHTML = list;
                         }
-                    });
-                    if (arrayOfObjects) {
-                        table = '<thead><tr>';
-                        let headers = Object.keys(dataValue[0]);
-                        headers.forEach(function (header) {
-                            table += '<th>' + header.stripTags() + '</th>';
-                        });
-                        table += '</tr></thead><tbody>';
+                    } else if (node.nodeName === 'TABLE') {
+                        let table = '';
+                        let arrayOfObjects = false;
                         dataValue.forEach(function (item) {
-                            table += '<tr>';
                             if (item.constructor === Object) {
-                                // @ts-ignore
-                                Object.values(item).forEach(function (cell: string) {
-                                    table += '<td>' + cell.toString().stripTags() + '</td>';
-                                });
+                                arrayOfObjects = true;
                             }
-                            table += '</tr>';
                         });
-                        table += '</tbody>';
-                    } else {
-                        // TODO: other types of arrays
-                    }
-                    if (node.innerHTML !== table) {
-                        node.innerHTML = table;
-                    }
-                }
-            } else if (dataValue.constructor === Object) {
-                if (node.nodeName === 'TABLE') {
-                    let table = '<tbody>';
-                    for (let key in dataValue) {
-                        let columnValue = dataValue[key];
-                        if (Array.isArray(dataValue[key])) {
-                            columnValue = dataValue[key].join(', ');
+                        if (arrayOfObjects) {
+                            table = '<thead><tr>';
+                            let headers = Object.keys(dataValue[0]);
+                            headers.forEach(function (header) {
+                                table += '<th>' + header.stripTags() + '</th>';
+                            });
+                            table += '</tr></thead><tbody>';
+                            dataValue.forEach(function (item) {
+                                table += '<tr>';
+                                if (item === null) {
+                                    table += '<td></td>';
+                                } else if (item.constructor === Object) {
+                                    // @ts-ignore
+                                    Object.values(item).forEach(function (cell: string) {
+                                        table += '<td>' + cell.toString().stripTags() + '</td>';
+                                    });
+                                } else {
+                                    table += '<td>' + item.toString() + '</td>';
+                                }
+                                table += '</tr>';
+                            });
+                            table += '</tbody>';
+                        } else {
+                            table = '<tbody>';
+                            dataValue.forEach(function (item) {
+                                if (Array.isArray(item)) {
+                                    table += '<tr>';
+                                    item.forEach(function (arrayItem) {
+                                        table += '<td>' + arrayItem + '</td>';
+                                    })
+                                    table += '</tr>';
+                                } else {
+                                    table += '<tr><td>' + item + '</td></tr>';
+                                }
+                            });
+                            table += '</tbody>';
                         }
-                        table += `<tr><td>${key.stripTags()}</td><td>` + columnValue.toString().stripTags() + `</td></tr>`;
+                        if (node.innerHTML !== table) {
+                            node.innerHTML = table;
+                        }
                     }
-                    table += '</tbody>';
-                    if (node.innerHTML !== table) {
-                        node.innerHTML = table;
+                } else if (dataValue.constructor && dataValue.constructor === Object) {
+                    if (node.nodeName === 'TABLE') {
+                        let table = '<tbody>';
+                        for (let key in dataValue) {
+                            let columnValue = dataValue[key];
+                            if (Array.isArray(dataValue[key])) {
+                                columnValue = dataValue[key].join(', ');
+                            }
+                            if (columnValue !== null) {
+                                columnValue = columnValue.toString().stripTags();
+                            }
+                            table += `<tr><td>${key.stripTags()}</td><td>` + columnValue + `</td></tr>`;
+                        }
+                        table += '</tbody>';
+                        if (node.innerHTML !== table) {
+                            node.innerHTML = table;
+                        }
+                    } else if (node.nodeName === 'UL' || node.nodeName === 'OL') {
+                        let list: string = buildList(node.nodeName,dataValue);
+                        if (node.innerHTML !== list) {
+                            node.innerHTML = list;
+                        }
                     }
-                }
-            } else {
-                if (node.innerText !== dataValue.toString()) {
+                } else if (node.innerText !== dataValue.toString()) {
                     node.innerText = dataValue;
                 }
+            } else if (node.innerText !== dataValue) {
+                node.innerText = dataValue;
             }
         }
-    } else {
-        App.errorMsg('[model] Data property \'' + value + '\' does not exist.', node);
     }
 });
+
+function buildList(nodeName: string, dataValue: Array<any>): string {
+    nodeName = nodeName.toLowerCase();
+    let list = '';
+    for (let item in dataValue) {
+        list += `<li>${item}`
+        if (dataValue[item].constructor && dataValue[item].constructor === Object) {
+            list += `<${nodeName}>` + buildList(nodeName, dataValue[item]) + `</${nodeName}>`;
+        } else if (Array.isArray(dataValue[item])) {
+            list += `<${nodeName}>`;
+            dataValue[item].forEach((subitem: any) => {
+                list += `<li>${subitem}</li>`;
+            })
+            list += `</${nodeName}>`;
+        }
+        list += '</li>';
+    }
+    return list;
+}
