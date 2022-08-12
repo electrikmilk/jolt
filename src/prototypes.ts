@@ -1,12 +1,12 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/3/2022 20:8
+ * Last Modified: 8/12/2022 16:39
  */
 
 interface String {
-    listAdd(value: string, separator?: string): string,
+    toTitleCase(): string
 
-    listRemove(value: string, separator?: string): string,
+    stripTags(): string
 
     trimChar(char: string): string
 
@@ -14,7 +14,9 @@ interface String {
 
     trimSuffix(phrase: string): string
 
-    stripTags(): string
+    listAdd(value: string, separator?: string): string,
+
+    listRemove(value: string, separator?: string): string,
 }
 
 /* Strings */
@@ -82,46 +84,109 @@ String.prototype.stripTags = function () {
     return this.toString().replace(/<\/?[^>]+(>|$)/gi, '');
 };
 
+String.prototype.toTitleCase = function () {
+    let nonTitles = ['of', 'a', 'the', 'and', 'an', 'or', 'nor', 'but', 'is', 'if', 'then', 'else', 'when', 'at', 'from', 'by', 'on', 'off', 'for', 'in', 'out', 'over', 'to', 'into', 'with'];
+    let words: string[] = this.toString().split(' ');
+    words.forEach(function (word: string, idx: number) {
+        if (idx === 0 || !nonTitles.includes(word)) {
+            words[idx] = word[0].toUpperCase() + word.substring(1, word.length);
+        }
+    });
+    return words.join(' ')
+}
+
 /* Arrays */
 interface Array<T> {
     end(): any
 
-    pluck(key: string): Array<string>,
+    pluck(key: string): Array<any>
 
-    remove(value: string): void,
+    removeByKey(key: string): void
 
-    removeAll(value: string): void
+    removeByValue(value: string): void
 }
 
-// @ts-ignore
-Array.prototype.end = () => this[this.length - 1];
-
-Array.prototype.pluck = function (key) {
-    let plucked: string[] = [];
-    if (this.length !== 0) {
-        this.forEach(function (array) {
-            if (key in array) {
-                plucked.push(array[key]);
-            }
-        });
+Object.defineProperty(Array.prototype, 'end', {
+    enumerable: false,
+    value: function () {
+        return this[this.length - 1];
     }
-    return plucked;
-};
+});
 
-Array.prototype.remove = function (value) {
-    let index = this.indexOf(value);
-    if (index > -1) {
-        this.splice(index, 1);
+Object.defineProperty(Array.prototype, 'pluck', {
+    enumerable: false,
+    value: function (key: string) {
+        let plucked: string[] = [];
+        if (this.length !== 0) {
+            this.forEach(function (object: Object) {
+                if (key in object) {
+                    // @ts-ignore
+                    plucked.push(object[key]);
+                }
+            });
+        }
+        return plucked;
     }
-};
+});
 
-Array.prototype.removeAll = function (value) {
-    let i = 0;
-    while (i < this.length) {
-        if (this[i] === value) {
-            this.splice(i, 1);
-        } else {
-            ++i;
+Object.defineProperty(Array.prototype, 'removeByKey', {
+    enumerable: false,
+    value: function (key: string) {
+        let index = this.indexOf(key);
+        if (index > -1) {
+            this.splice(index, 1);
         }
     }
-};
+});
+
+Object.defineProperty(Object.prototype, 'removeByValue', {
+    enumerable: false,
+    value: function (value: string) {
+        let i = 0;
+        while (i < this.length) {
+            if (this[i] === value) {
+                this.splice(i, 1);
+            } else {
+                ++i;
+            }
+        }
+    }
+});
+
+interface Object {
+    keysToLowerCase(): void
+
+    keysToUpperCase(): void
+
+    keysToTitleCase(): void
+}
+
+Object.defineProperty(Object.prototype, 'keysToLowerCase', {
+    enumerable: false,
+    value: function () {
+        for (let key in this) {
+            // @ts-ignore
+            delete Object.assign(this, {[key.toLowerCase()]: this[key]})[key];
+        }
+    }
+});
+
+Object.defineProperty(Object.prototype, 'keysToUpperCase', {
+    enumerable: false,
+    value: function () {
+        for (let key in this) {
+            // @ts-ignore
+            delete Object.assign(this, {[key.toUpperCase()]: this[key]})[key];
+        }
+    }
+});
+
+Object.defineProperty(Object.prototype, 'keysToTitleCase', {
+    enumerable: false,
+    value: function () {
+        for (let key in this) {
+            // @ts-ignore
+            delete Object.assign(this, {[key.toTitleCase()]: this[key]})[key];
+        }
+    }
+});
