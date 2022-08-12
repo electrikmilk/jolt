@@ -73,6 +73,16 @@ interface For {
     items: Array<any>
 }
 
+window.onload = () => {
+    User.getAgent();
+    App.start();
+    App.ready();
+    setInterval(function () {
+        // @ts-ignore
+        App.loop(document);
+    }, 100);
+};
+
 let App: App = {
     data: [],
     errorNodes: [],
