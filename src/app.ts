@@ -35,7 +35,7 @@ interface App {
     registerLoop: (callback: Function) => void,
     registerInit: (callback: Function) => void,
     Data: (key: string, value: any) => any | boolean,
-    Get: (key: string) => any | boolean,
+    get: (key: string) => any | boolean,
 }
 
 interface KeyValue {
@@ -108,15 +108,6 @@ let App: App = {
                 });
             }
         });
-        let url = window.location.href;
-        if (url.includes('?')) {
-            let kvs = window.location.href.split('?')[1].split('&');
-            kvs.forEach(function (value) {
-                let param = value.split('=');
-                // @ts-ignore
-                App.urlParams[param[0]] = param[1];
-            });
-        }
         App.inits.forEach(callback => callback());
     },
     create: function (app: App) {
@@ -297,7 +288,7 @@ let App: App = {
             return App.data[key] = value;
         }
     },
-    Get: (key: string): string | null | undefined | boolean => {
+    get: (key: string): string | null | undefined | boolean => {
         if (Object.keys(App.urlParams).includes(key)) {
             // @ts-ignore
             return App.urlParams[key];
