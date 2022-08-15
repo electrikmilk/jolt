@@ -182,7 +182,11 @@ function buildList(nodeName: string, dataValue: Array<any>): string {
     nodeName = nodeName.toLowerCase();
     let list = '';
     for (let item in dataValue) {
-        list += `<li>${item}`
+        if(dataValue[item] && dataValue[item].constructor !== Object) {
+            list += `<li><strong>${item}:</strong> ${dataValue[item]}`
+        } else {
+            list += `<li>${item}`
+        }
         if (dataValue[item].constructor && dataValue[item].constructor === Object) {
             list += `<${nodeName}>` + buildList(nodeName, dataValue[item]) + `</${nodeName}>`;
         } else if (Array.isArray(dataValue[item])) {
