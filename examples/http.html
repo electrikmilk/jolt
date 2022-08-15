@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/5/2022 16:35
+  ~ Last Modified: 8/15/2022 10:10
   -->
 
 <!DOCTYPE html>
@@ -9,27 +9,39 @@
 	<meta charset="UTF-8">
 	<title>HTTP API Test</title>
 
-	<script type="text/javascript" src="../dist/jolt.min.js"></script>
+	<script type="text/javascript" src="../build/jolt.js"></script>
 
 	<script>
 		App.create({
 			ready: () => {
-				HTTP.get('request.php',
+				HTTP.get(App.data.url,
 					{
 						responseType: 'json',
-						data: {
-							key: 'value'
-						}
+						data: App.data.formValues
 					}).then((response) => {
-					console.log(response);
+					App.data.response = response
 				}).catch((error) => {
 					console.error(error);
+					App.data.error = error
 				});
+			},
+			data: {
+				url: 'request.php',
+				formValues: {
+					key: 'value'
+				},
+				response: null,
+				error: null
 			}
 		});
 	</script>
 </head>
 <body>
-
+	<p>Request URL: <model>url</model></p>
+	<p>Request data:</p>
+	<ul model="formValues"></ul>
+	<p>Response data:</p>
+	<ul model="response"></ul>
+	<p style="color:red">Errors: <model>error</model></p>
 </body>
 </html>
