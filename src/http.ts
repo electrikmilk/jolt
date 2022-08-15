@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 16:42
+ * Last Modified: 8/15/2022 10:25
  */
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -8,6 +8,7 @@ type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 interface HttpRequest {
     request: XMLHttpRequest,
     method: HTTPMethod,
+    body: XMLHttpRequestBodyInit
 }
 
 interface Options {
@@ -40,7 +41,6 @@ let HTTP = {
 class HttpRequest {
     constructor(method: HTTPMethod, url: string, options?: Options | undefined) {
         this.request = new XMLHttpRequest();
-        let body: XMLHttpRequestBodyInit = '';
         this.method = method;
         if (typeof options !== 'undefined') {
             if (options.responseType) {
@@ -55,7 +55,7 @@ class HttpRequest {
                         // @ts-ignore
                         formData.append(key, options.data[key]);
                     }
-                    body = formData;
+                    this.body = formData;
                 }
             }
             if (options.headers) {
@@ -66,10 +66,10 @@ class HttpRequest {
             }
         }
         this.request.open(method, url, true);
-        this.request.send(body);
     }
 
     send(): Promise<Object> {
+        this.request.send(this.body);
         return new Promise((resolve: (request: Object) => void) => {
             this.request.onload = () => {
                 if (this.request.status >= 200 && this.request.status < 400) {
@@ -101,7 +101,7 @@ class HttpRequest {
     }
 
     error() {
-        console.error(`HTTP.${this.method}(): ${this.request.status} `+(this.request.response ? this.request.response : ''));
+        console.error(`HTTP.${this.method}(): ${this.request.status} ` + (this.request.response ? this.request.response : ''));
     }
 
     progress(callback: (percent: number) => void) {
