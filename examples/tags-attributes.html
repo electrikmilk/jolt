@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/12/2022 17:51
+  ~ Last Modified: 8/15/2022 10:5
   -->
 
 <!doctype html>
@@ -57,6 +57,78 @@
 
 </head>
 <body>
+
+	<h2><code>model</code> Attribute</h2>
+	<h3 model="count"></h3>
+	<button type="submit" click="count">Click me!</button>
+
+	<br/><br/>
+
+	<input type="text" model="count"/><br/>
+	<input type="text" model="count"/><br/>
+	<input type="range" model="count" max="100" min="1" step="1"/>
+
+	<p>Model array to HTML list:</p>
+	<ul model="list"></ul>
+	<ol model="list"></ol>
+
+	<p>Model object to HTML list:</p>
+	<ul model="deepList"></ul>
+	<ol model="deepList"></ol>
+
+	<p>Model object or array to HTML table:</p>
+	<table model="list"></table>
+	<table model="group"></table>
+	<table model="multi"></table>
+	<table model="multiArray"></table>
+
+	<hr/>
+
+	<h2><code>if</code> Attribute</h2>
+
+	<div if="show">I'm here because show is true!</div>
+	<input type="checkbox" model="show"/>
+
+	<hr/>
+
+	<h2><code>toggle</code> Attribute</h2>
+
+	<button type="submit" toggle="#myMessage">Toggle Message</button>
+	<br/><br/>
+	<div id="myMessage" model="message"></div>
+	<input type="text" model="message"/><br/>
+
+	<hr/>
+
+	<h2><code>foreach</code> Attribute</h2>
+
+	<select model="item">
+		<option foreach="item in list" value="{item}">{item}</option>
+	</select>
+	<p>You selected:
+		<model>item</model>
+	</p>
+
+	<ul>
+		<li foreach="item in list">Item: {item}
+			<button click="remove('{item}')">&times;</button>
+		</li>
+	</ul>
+
+	<div>
+		<button foreach="item in list">{item}</button>
+	</div>
+
+	<hr/>
+
+	<h2><code>html</code> Attribute</h2>
+
+	<div html="html"></div>
+
+	<hr/>
+
+	<h2><code>&lt;shortcut&gt;</code> Tag</h2>
+
 	<p>You just press
 		<shortcut>super + c</shortcut>
 		, then it copies the text.
@@ -84,46 +156,16 @@
 	<p>
 		<shortcut>ctrl + alt + delete</shortcut>
 	</p>
-	<div html="html"></div>
-	<select model="item">
-		<option foreach="item in list" value="{item}">{item}</option>
-	</select>
-	<p>You selected:
-		<model>item</model>
-	</p>
-	<div>
-		<spinner if="show"></spinner>
-		<spinner small></spinner>
-	</div>
-	<table model="list"></table>
-	<table model="group"></table>
-	<table model="multi"></table>
-	<table model="multiArray"></table>
-	<p>Array to HTML list:</p>
-	<ul model="list"></ul>
-	<ol model="list"></ol>
-	<p>Object of arrays of objects to HTML list:</p>
-	<ul model="deepList"></ul>
-	<ol model="deepList"></ol>
-	<h3 model="count"></h3>
-	<ul>
-		<li foreach="item in list">Item: {item}
-			<button click="remove('{item}')">&times;</button>
-		</li>
-	</ul>
-	<div>
-		<button foreach="item in list">{item}</button>
-	</div>
-	<button type="submit" click="count">Click me!</button>
-	<button type="submit" toggle="#myMessage">Toggle Message</button>
-	<div id="myMessage" model="message"></div>
-	<br/>
-	<input type="text" model="message"/><br/>
-	<input type="text" model="count"/><br/>
-	<input type="text" model="count"/><br/>
-	<input type="range" model="count" max="100" min="1" step="1"/><br/>
-	<div if="show">I'm here because show is true!</div>
-	<input type="checkbox" model="show"/>
+
+	<hr/>
+
+	<h2><code>&lt;model&gt;</code> Tag</h2>
+
+	<model>count</model>
+
+	<hr/>
+
+	<h2><code>&lt;eval&gt;</code> Tag</h2>
 
 	<p>
 		<model>count</model>
