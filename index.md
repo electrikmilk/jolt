@@ -59,4 +59,4 @@ Compile and minify to create `build/jolt.min.js`:
 php jolt build prod
 ```
 
-Any of these commands will create a `/build/` directory. Using the `jolt build` or `jolt build prod` commands will delete `build/jolt.ts`.
+Any of these commands will create a `/build/` directory.
