@@ -1,8 +1,30 @@
 <div align=center>
   <h1>&#9889;<br>Jolt</h1>
   <p>Reactive Javascript Utility Framework</p>
-  <a href='https://github.com/electrikmilk/jolt/wiki'>Docs</a>
+  <a href='https://github.com/electrikmilk/jolt/wiki'>Documentation</a>
 </div>
+
+---
+
+## Getting Started
+
+```html
+<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "https://cdn.jsdelivr.net/gh/electrikmilk/jolt/dist/jolt.min.js"
+	    }
+	  }
+</script>
+```
+
+```javascript
+import * as Jolt from 'jolt';
+
+Jolt.create({
+    // ...
+});
+```
 
 ---
 
