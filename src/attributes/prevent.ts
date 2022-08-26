@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 0:18
+ * Last Modified: 8/16/2022 22:29
  */
 
-App.registerAttribute('prevent', function (value, node) {
+import {registerAttribute} from "../attributes";
+
+registerAttribute('prevent', function (value, node) {
     // @ts-ignore
     let prevent = node.attributes.prevent.value;
     switch (prevent) {

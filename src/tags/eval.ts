@@ -1,22 +1,29 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/10/2022 21:13
+ * Last Modified: 8/16/2022 22:11
  */
 
-App.registerReactiveTag('eval', function (node: HTMLElement) {
+import {Random} from "../helpers";
+import {registerReactiveTag} from "../tags";
+import {registerLoop} from "../app";
+
+let evals: Array<string> = [];
+
+registerReactiveTag('eval', function (node: HTMLElement) {
     if (node.id === '') {
         node.id = Random.id('id');
     }
-    if (!Object.keys(App.evals).includes(node.id)) {
+    if (!Object.keys(evals).includes(node.id)) {
         // @ts-ignore
-        App.evals[node.id] = node.innerText;
+        evals[node.id] = node.innerText;
     }
 });
-App.registerLoop(function () {
-    for (let e in App.evals) {
+
+registerLoop(function () {
+    for (let e in evals) {
         let element = document.getElementById(e);
         if (element) {
-            let result = eval(App.context.join('\n') + App.evals[e]).toString();
+            let result = eval(context.join('\n') + evals[e]).toString();
             if (result !== element.innerText) {
                 element.innerText = result;
             }

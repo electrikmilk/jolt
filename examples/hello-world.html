@@ -1,0 +1,44 @@
+<!--
+  ~ Copyright (c) 2022 Brandon Jordan
+  ~ Last Modified: 8/26/2022 13:2
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello, World!</title>
+
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "../build/jolt.js"
+	    }
+	  }
+
+
+	</script>
+
+	<script type="module">
+		import * as Jolt from 'jolt';
+
+		Jolt.create({
+			data: {
+				number: 0,
+				message: 'Hello, World!'
+			},
+			functions: {
+				count() {
+					this.number++;
+				}
+			}
+		});
+	</script>
+
+</head>
+<body>
+	<p model="message"></p>
+	<p model="number"></p>
+	<button click="count">Click me!</button>
+</body>
+</html>

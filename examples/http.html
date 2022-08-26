@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/15/2022 10:10
+  ~ Last Modified: 8/24/2022 23:44
   -->
 
 <!DOCTYPE html>
@@ -9,20 +9,19 @@
 	<meta charset="UTF-8">
 	<title>HTTP API Test</title>
 
-	<script type="text/javascript" src="../dist/jolt.min.js"></script>
+	<script type="module">
+		import * as Jolt from '../build/jolt.js';
 
-	<script>
-		App.create({
-			ready: () => {
-				HTTP.get(App.data.url,
-					{
-						responseType: 'json',
-						data: App.data.formValues
-					}).then((response) => {
-					App.data.response = response
+		Jolt.create({
+			ready: function() {
+				Jolt.HTTP.get(this.url, {
+					responseType: 'json',
+					data: this.formValues
+				}).then((response) => {
+					this.response = response;
 				}).catch((error) => {
 					console.error(error);
-					App.data.error = error
+					this.error = error;
 				});
 			},
 			data: {
@@ -32,16 +31,25 @@
 				},
 				response: null,
 				error: null
+			},
+			functions: {
+				mount() {
+					console.log('hello');
+				}
 			}
 		});
 	</script>
 </head>
 <body>
-	<p>Request URL: <model>url</model></p>
+	<p>Request URL:
+		<model>url</model>
+	</p>
 	<p>Request data:</p>
 	<ul model="formValues"></ul>
 	<p>Response data:</p>
 	<ul model="response"></ul>
-	<p style="color:red">Errors: <model>error</model></p>
+	<p style="color:red">Errors:
+		<model>error</model>
+	</p>
 </body>
 </html>

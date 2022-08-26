@@ -4,7 +4,9 @@
   <a href='https://github.com/electrikmilk/jolt/wiki'>Docs</a>
 </div>
 
-## DO
+---
+
+### DO
 
 - Be easy to learn
 - Keep things simple
@@ -12,27 +14,33 @@
 - Create abstractions that make life easier for the developer
 - Use dependencies only when absolutely necessary
 
-## DON'T
+### DON'T
 
 - Add unnecessary bloat that a few devs will use (DIY!)
 - Create the next fully featured framework for huge websites
 - Create unnecessarily complex abstractions, APIs, and tools
 - Add bloating, unnecessary, needlessly complex dependencies
 
-# Build
+## Build
 
-Jolt is not only written in TypeScript, but in multiple files and directories in /src/ to keep development organized. Therefore, it must be combined and compiled. Either of these commands will create a /build/ directory.
+Jolt is not only written in TypeScript, but in multiple files and directories in /src/ to keep development organized. Therefore, it must be combined and compiled.
+
+Combine source to create `build/jolt.ts`:
+
+```console
+php jolt mix
+```
 
 Compile to create `build/jolt.js`:
 
 ```console
-tsc
+php jolt build
 ```
-
-**OR**
 
 Compile and minify to create `build/jolt.min.js`:
 
 ```console
-php jolt build
+php jolt build prod
 ```
+
+Any of these commands will create a `/build/` directory. Using the `jolt build` or `jolt build prod` commands will delete `build/jolt.ts`.

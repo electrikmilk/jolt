@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 17:6
+ * Last Modified: 8/16/2022 17:53
  */
 
 function successful( string $message ): string
@@ -23,27 +23,36 @@ function generate_copyright(): string
     return "/*
  * Jolt Framework ⚡
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: ".date( 'F j, Y H:i:s' )."
+ * Built: ".date( 'F j, Y H:i:s' )."
  */\n";
 }
 
 if ( $argc > 1 ) {
-    if ( $argv[ 1 ] === "min" ) {
-        include_once 'meta/minifier.php';
-    } elseif ( $argv[ 1 ] === "mix" ) {
+    if ( $argv[ 1 ] === 'mix' ) {
         include_once 'meta/mix.php';
-    } elseif ( $argv[ 1 ] === "build" ) {
+    } elseif ( $argv[ 1 ] === 'min' ) {
         include_once 'meta/build.php';
         include_once 'meta/minifier.php';
+    } elseif ( $argv[ 1 ] === 'build' ) {
+        $build_for = 'dev';
+        if ( $argv[ 2 ] === 'prod' ) {
+            $build_for = 'prod';
+        }
+        include_once 'meta/mix.php';
+        include_once 'meta/build.php';
+        if ( $build_for === 'prod' ) {
+            include_once 'meta/minifier.php';
+        }
     }
 } else {
     $commands = [
-        'build' => 'Run tsc && php jolt min',
-        'min'   => 'Minify jolt.js',
-        'mix'   => 'Combine files in src into jolt.ts'
+        'mix'        => 'Combine files in src into jolt.ts',
+        'min'        => 'Minify compiled source',
+        'build'      => 'Combine and compile',
+        'build prod' => 'Combine, compile, and minify'
     ];
     echo "\033[32mUSAGE:\033[0m\n";
     foreach ( $commands as $command => $description ) {
-        echo "jolt \033[1m$command\033[0m - $description\n";
+        echo "\033[1m$command\033[0m\t\t$description\n";
     }
 }

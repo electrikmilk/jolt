@@ -1,9 +1,23 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 0:14
+ * Last Modified: 8/16/2022 22:39
  */
 
-App.registerReactiveAttribute('foreach', function (value, node) {
+import {$} from "../helpers";
+import {registerReactiveAttribute} from "../attributes";
+import {registerLoop} from "../app";
+
+interface For {
+    node: string,
+    replace: string,
+    parent: string,
+    property: string,
+    items: Array<any>
+}
+
+let fors: Array<For> = [];
+
+registerReactiveAttribute('foreach', function (value, node) {
     let copyNode = node;
     // @ts-ignore
     if (node.parentNode.id === '') {
@@ -25,18 +39,19 @@ App.registerReactiveAttribute('foreach', function (value, node) {
         property: expression[1],
         items: []
     };
-    App.fors.push(forloop);
+    fors.push(forloop);
 });
-App.registerLoop(function () {
-    App.fors.forEach(function (loop) {
+
+registerLoop(function () {
+    fors.forEach(function (forloop) {
         // @ts-ignore
-        if (App.Data(loop.property) && Array.isArray(App.data[loop.property])) {
+        if (dataKeys.includes(forloop.property) && Array.isArray(instance[forloop.property])) {
             let list = '';
-            const parent = $('#' + loop.parent);
+            const parent = $('#' + forloop.parent);
             // @ts-ignore
-            App.data[loop.property].forEach(function (item) {
+            instance[forloop.property].forEach(function (item) {
                 // @ts-ignore
-                list += loop.node.replaceAll(loop.replace, item);
+                list += forloop.node.replaceAll(forloop.replace, item);
             });
             // @ts-ignore
             if (parent.innerHTML !== list) {

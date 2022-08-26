@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/10/2022 21:14
+  ~ Last Modified: 8/26/2022 13:8
   -->
 
 <!doctype html>
@@ -9,12 +9,21 @@
 	<meta charset="UTF-8">
 	<title>Random User</title>
 
-	<script type="text/javascript" src="../dist/jolt.min.js"></script>
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "../build/jolt.js"
+	    }
+	  }
 
-	<script>
-		App.create({
-			ready: () => {
-				App.functions.get();
+	</script>
+
+	<script type="module">
+		import * as Jolt from '../build/jolt.js';
+
+		Jolt.create({
+			ready: function() {
+				this.get();
 			},
 			data: {
 				photo: null,
@@ -24,21 +33,21 @@
 				busy: true
 			},
 			functions: {
-				get: async () => {
-					App.data.busy = true;
+				async get() {
+					this.busy = true;
 					await fetch('https://random-data-api.com/api/users/random_user')
 						.then(response => response.json())
 						.then((response) => {
-							App.Data({
+							Jolt.data({
 								busy: false,
 								name: response['first_name'] + ' ' + response['last_name'],
 								username: response['username'],
 								email: response['email'],
-								photo: 'https://thispersondoesnotexist.com/image?refresh=' + Random.id()
+								photo: 'https://thispersondoesnotexist.com/image?refresh=' + Jolt.Random.id()
 							});
 						})
 						.catch((error) => {
-							App.data.busy = false;
+							this.busy = false;
 							console.error(error);
 						});
 				}

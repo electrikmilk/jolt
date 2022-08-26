@@ -1,9 +1,14 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 0:23
+ * Last Modified: 8/24/2022 22:17
  */
 
-App.registerTag('shortcut', (element: HTMLElement) => {
+import "./String";
+import "../prototypes";
+import {registerTag} from "../tags";
+import {User} from "../app";
+
+registerTag('shortcut', (element: HTMLElement) => {
     if (element.innerText) {
         if (User.platform.name !== 'windows' && User.platform.name !== 'macos') {
             element.innerHTML = makeShortcut(element.innerText, 'windows') + ' on Windows or ' + makeShortcut(element.innerText, 'macos') + ' on macOS';

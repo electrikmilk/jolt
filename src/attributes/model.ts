@@ -1,14 +1,20 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/12/2022 17:50
+ * Last Modified: 8/26/2022 13:32
  */
 
+import {Random} from "../helpers";
+
+import "./String";
+import "../prototypes";
+import {registerReactiveAttribute} from "../attributes";
+
 function modelError(message: string, value: string, node: HTMLElement) {
-    App.errorMsg(`[model="${value}"] ${message}.`, node);
+    errorMsg(`[model="${value}"] ${message}`, node);
 }
 
-App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
-    if (!Object.keys(App.data).includes(value)) {
+registerReactiveAttribute('model', function (value, node: HTMLElement) {
+    if (!dataKeys.includes(value)) {
         modelError(`Data property '${value} does not exist.`, value, node);
     } else {
         if (node.nodeName === 'INPUT' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
@@ -16,20 +22,20 @@ App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
                 node.id = Random.id('id');
             }
             // @ts-ignore
-            if (node.type !== 'checkbox' && typeof App.data[value] === 'boolean') {
-                modelError('Only checkboxes can model booleans', value, node);
+            if (node.type !== 'checkbox' && typeof instance[value] === 'boolean') {
+                modelError('Only checkboxes can model booleans.', value, node);
             }
             // @ts-ignore
-            if (!App.events.includes(node.id)) {
+            if (!events.includes(node.id)) {
                 // @ts-ignore
                 if (node.type === 'checkbox') {
                     node.onchange = () => {
                         // @ts-ignore
-                        if (typeof App.data[value] === 'boolean') {
+                        if (typeof instance[value] === 'boolean') {
                             // @ts-ignore
-                            App.data[value] = node.checked;
+                            instance[value] = node.checked;
                         } else {
-                            modelError('Checkboxes can only model booleans', value, node);
+                            modelError('Checkboxes can only model booleans.', value, node);
                         }
                     };
                     // @ts-ignore
@@ -38,7 +44,7 @@ App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
                         // @ts-ignore
                         let val = node.value;
                         // @ts-ignore
-                        if (typeof App.data[value] === 'number') {
+                        if (typeof instance[value] === 'number') {
                             if (val) {
                                 val = parseInt(val);
                             } else {
@@ -46,14 +52,14 @@ App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
                             }
                         }
                         // @ts-ignore
-                        App.data[value] = val;
+                        instance[value] = val;
                     };
                 } else {
                     node.onkeyup = () => {
                         // @ts-ignore
                         let val = node.value;
                         // @ts-ignore
-                        if (typeof App.data[value] === 'number') {
+                        if (typeof instance[value] === 'number') {
                             if (val) {
                                 val = parseInt(val);
                             } else {
@@ -61,34 +67,34 @@ App.registerReactiveAttribute('model', function (value, node: HTMLElement) {
                             }
                         }
                         // @ts-ignore
-                        App.data[value] = val;
+                        instance[value] = val;
                     };
                 }
                 // @ts-ignore
-                App.events.push(node.id);
+                events.push(node.id);
             }
             if (node !== document.activeElement) {
                 // @ts-ignore
                 if (node.type === 'checkbox') {
                     // @ts-ignore
-                    if (node.checked !== App.data[value]) {
+                    if (node.checked !== instance[value]) {
                         // @ts-ignore
-                        node.checked = App.data[value];
+                        node.checked = instance[value];
                     }
                 } else {
                     // @ts-ignore
-                    if (node.type === 'text' || node.type === 'range' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
+                    if (node.nodeName === 'INPUT' || node.nodeName === 'TEXTAREA' || node.nodeName === 'SELECT') {
                         // @ts-ignore
-                        if (node.value !== App.data[value]) {
+                        if (node.value !== instance[value]) {
                             // @ts-ignore
-                            node.value = App.data[value];
+                            node.value = instance[value];
                         }
                     }
                 }
             }
         } else {
             // @ts-ignore
-            let dataValue = App.Data(value);
+            let dataValue = instance[value];
             if (dataValue !== null && dataValue !== false) {
                 if (Array.isArray(dataValue)) {
                     if (node.nodeName === 'UL' || node.nodeName === 'OL') {
@@ -182,7 +188,7 @@ function buildList(nodeName: string, dataValue: Array<any>): string {
     nodeName = nodeName.toLowerCase();
     let list = '';
     for (let item in dataValue) {
-        if(dataValue[item] && dataValue[item].constructor !== Object) {
+        if(dataValue[item] && dataValue[item].constructor !== Object && !Array.isArray(dataValue[item])) {
             list += `<li><strong>${item}:</strong> ${dataValue[item]}`
         } else {
             list += `<li>${item}`

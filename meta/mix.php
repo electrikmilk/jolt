@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/5/2022 0:36
+ * Last Modified: 8/15/2022 14:18
  */
 
 function collect( string $path ): string
@@ -13,30 +13,26 @@ function collect( string $path ): string
         }
         if ( is_dir( "$path/$item" ) ) {
             echo banner( "$path/$item" );
-            $contents .= "/* $item */\n".collect( "$path/$item" );
-        } else {
-            if ( pathinfo( "$path/$item", PATHINFO_EXTENSION ) === "ts" ) {
-                echo successful( '+' )." Added $path/$item\n";
-                $contents .= file_get_contents( "$path/$item" )."\n";
-            }
+            $contents .= collect( "$path/$item" );
+        } elseif ( pathinfo( "$path/$item", PATHINFO_EXTENSION ) === "ts" ) {
+            echo successful( '+' )." Added $path/$item\n";
+            $contents .= file_get_contents( "$path/$item" )."\n";
         }
     }
     return $contents;
 }
 
-if ( ! file_exists( 'build' ) ) {
-    if ( ! mkdir( 'build' ) && ! is_dir( 'build' ) ) {
-        throw new \RuntimeException( sprintf( 'Directory "%s" was not created', 'build' ) );
-    }
+if ( ! file_exists( 'build' ) && ! mkdir( 'build' ) && ! is_dir( 'build' ) ) {
+    throw new \RuntimeException( sprintf( 'Directory "%s" was not created', 'build' ) );
 }
 
 $js = collect( 'src' );
 
 $js = preg_replace( '!/\*.*?\*/!s', '', $js );
 $js = preg_replace( '/\n\s*\n/', "\n", $js );
-//$js = str_replace("\n","",$js). "\n";
+$js = preg_replace( '/import ({(.*?)})? ?(from)? ?\"(.*?)\";/', '', $js );
 
-$js = generate_copyright().$js;
+$js = generate_copyright().trim( $js );
 
 file_put_contents( 'build/jolt.ts', $js );
 

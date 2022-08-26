@@ -1,27 +1,29 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/12/2022 16:39
+ * Last Modified: 8/26/2022 13:36
  */
-
-interface String {
-    toTitleCase(): string
-
-    stripTags(): string
-
-    trimChar(char: string): string
-
-    trimPrefix(phrase: string): string
-
-    trimSuffix(phrase: string): string
-
-    listAdd(value: string, separator?: string): string,
-
-    listRemove(value: string, separator?: string): string,
-}
 
 /* Strings */
 
-String.prototype.listAdd = function (value: string, separator = ',') {
+declare global {
+    interface String {
+        toTitleCase(): string
+
+        stripTags(): string
+
+        trimChar(char: string): string
+
+        trimPrefix(phrase: string): string
+
+        trimSuffix(phrase: string): string
+
+        listAdd(value: string, separator?: string): string
+
+        listRemove(value: string, separator?: string): string
+    }
+}
+
+String.prototype.listAdd = function (value: string, separator: string = ',') {
     let values = this.split(separator);
     for (let i = 0; i < values.length; i++) {
         if (values[i] !== value) {
@@ -31,7 +33,7 @@ String.prototype.listAdd = function (value: string, separator = ',') {
     return values.join(separator);
 };
 
-String.prototype.listRemove = function (value: string, separator = ',') {
+String.prototype.listRemove = function (value: string, separator: string = ',') {
     let values = this.split(separator);
     for (let i = 0; i < values.length; i++) {
         if (values[i] === value) {
@@ -41,12 +43,12 @@ String.prototype.listRemove = function (value: string, separator = ',') {
     return values.join(separator);
 };
 
-String.prototype.trimChar = function (char): string {
+String.prototype.trimChar = function (char: string): string {
     // @ts-ignore
     return this.toString().replaceAll(char, '');
 };
 
-String.prototype.trimPrefix = function (phrase) {
+String.prototype.trimPrefix = function (phrase: string) {
     let string = this.toString().split('');
     let phraseSlice = phrase.split('');
     let hasPrefix = true;
@@ -63,7 +65,7 @@ String.prototype.trimPrefix = function (phrase) {
     return string.join('');
 };
 
-String.prototype.trimSuffix = function (phrase) {
+String.prototype.trimSuffix = function (phrase: string) {
     let string = this.toString().split('').reverse();
     let phraseSlice = phrase.split('').reverse();
     let hasPrefix = true;
@@ -73,7 +75,7 @@ String.prototype.trimSuffix = function (phrase) {
         }
     }
     if (hasPrefix) {
-        phraseSlice.forEach(function (c, i) {
+        phraseSlice.forEach(function (c: string, i: number) {
             string.splice(i, 1);
         });
     }
@@ -96,15 +98,6 @@ String.prototype.toTitleCase = function () {
 }
 
 /* Arrays */
-interface Array<T> {
-    end(): any
-
-    pluck(key: string): Array<any>
-
-    removeByKey(key: string): void
-
-    removeByValue(value: string): void
-}
 
 Object.defineProperty(Array.prototype, 'end', {
     enumerable: false,
@@ -129,6 +122,13 @@ Object.defineProperty(Array.prototype, 'pluck', {
     }
 });
 
+Object.defineProperty(Array.prototype, 'remove', {
+    enumerable: false,
+    value: function (key: string) {
+        this.removeByKey(key);
+    }
+});
+
 Object.defineProperty(Array.prototype, 'removeByKey', {
     enumerable: false,
     value: function (key: string) {
@@ -139,7 +139,7 @@ Object.defineProperty(Array.prototype, 'removeByKey', {
     }
 });
 
-Object.defineProperty(Object.prototype, 'removeByValue', {
+Object.defineProperty(Array.prototype, 'removeByValue', {
     enumerable: false,
     value: function (value: string) {
         let i = 0;
@@ -153,13 +153,7 @@ Object.defineProperty(Object.prototype, 'removeByValue', {
     }
 });
 
-interface Object {
-    keysToLowerCase(): void
-
-    keysToUpperCase(): void
-
-    keysToTitleCase(): void
-}
+/* Objects */
 
 Object.defineProperty(Object.prototype, 'keysToLowerCase', {
     enumerable: false,
@@ -190,3 +184,5 @@ Object.defineProperty(Object.prototype, 'keysToTitleCase', {
         }
     }
 });
+
+export {}

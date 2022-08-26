@@ -1,34 +1,41 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/9/2022 10:5
+ * Last Modified: 8/25/2022 0:0
  */
 
-App.registerReactiveTag('model', function (node: HTMLElement) {
+import {Random, $} from "../helpers";
+import {registerReactiveTag} from "../tags";
+import {registerLoop} from "../app";
+
+let modelTags: Array<string> = [];
+
+registerReactiveTag('model', function (node: HTMLElement) {
     if (node.id === '') {
         node.id = Random.id('id');
     }
-    if (!Object.keys(App.modelTags).includes(node.id)) {
+    if (!Object.keys(modelTags).includes(node.id)) {
         if (node.innerText) {
-            if (Object.keys(App.data).includes(node.innerText)) {
+            if (dataKeys.includes(node.innerText)) {
                 // @ts-ignore
-                App.modelTags[node.id] = node.innerText;
+                modelTags[node.id] = node.innerText;
             } else {
                 node.innerText = '';
-                App.errorMsg(' <model> Data property \'' + node.innerText + '\' does not exist.', node);
+                errorMsg(' <model> Data property \'' + node.innerText + '\' does not exist.', node);
             }
         }
     }
 });
-App.registerLoop(function () {
-    for (let tag in App.modelTags) {
-        let property = App.modelTags[tag];
+
+registerLoop(function () {
+    for (let tag in modelTags) {
+        let property = modelTags[tag];
         let tagSelect = $('#' + tag);
-        if (Object.keys(App.data).includes(property) && tagSelect) {
+        if (dataKeys.includes(property) && tagSelect) {
             let modelElement = tagSelect;
             // @ts-ignore
-            if (App.data[property] !== null) {
+            if (instance[property] !== null) {
                 // @ts-ignore
-                let value = App.data[property].toString().stripTags();
+                let value = instance[property].toString().stripTags();
                 if (modelElement.innerText !== value) {
                     modelElement.innerText = value;
                 }

@@ -1,16 +1,25 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/12/2022 13:8
+ * Last Modified: 8/26/2022 14:3
  */
 
-App.registerInit(() => {
+import {registerInit} from "./app";
+
+interface SearchParams {
+    key: string,
+    value: string
+}
+
+let urlParams: Array<SearchParams> = [];
+
+registerInit(() => {
     let url = window.location.href;
     if (url.includes('?')) {
         if (typeof URL !== "undefined") {
             let urlObject = new URL(url);
             urlObject.searchParams.forEach(function (value, key) {
                 // @ts-ignore
-                App.urlParams[key] = value;
+                urlParams[key] = value;
             })
         } else {
             if (url.includes('&')) {
@@ -19,15 +28,24 @@ App.registerInit(() => {
                     const param = kv.split('=');
                     const key = decodeURIComponent(param[0])
                     // @ts-ignore
-                    App.urlParams[key] = decodeURIComponent(param[1]);
+                    urlParams[key] = decodeURIComponent(param[1]);
                 });
             } else {
                 let kv = window.location.href.split('?')[1];
                 const param = kv.split('=');
-                const key = decodeURIComponent(param[0])
+                const key: string = decodeURIComponent(param[0])
                 // @ts-ignore
-                App.urlParams[key] = decodeURIComponent(param[1]);
+                urlParams[key] = decodeURIComponent(param[1]);
             }
         }
     }
 });
+
+export function get(key: string) {
+    if (Object.keys(urlParams).includes(key)) {
+        // @ts-ignore
+        return urlParams[key];
+    } else {
+        return false;
+    }
+}

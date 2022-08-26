@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/15/2022 10:25
+ * Last Modified: 8/26/2022 14:4
  */
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -17,7 +17,7 @@ interface Options {
     headers: Object
 }
 
-let HTTP = {
+export const HTTP = {
     request: (method: HTTPMethod, url: string, options?: Options | undefined): HttpRequest => {
         return new HttpRequest(method, url, options);
     },
@@ -117,6 +117,8 @@ class HttpRequest {
     }
 }
 
-function get(url: string): Promise<Object> {
+export {HttpRequest}
+
+export function fetch(url: string): Promise<Object> {
     return new HttpRequest("GET", url).send();
 }

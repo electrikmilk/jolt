@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/5/2022 10:52
+  ~ Last Modified: 8/26/2022 13:36
   -->
 
 <!doctype html>
@@ -9,23 +9,33 @@
 	<meta charset="UTF-8">
 	<title>Todo App</title>
 
-	<script type="text/javascript" src="../dist/jolt.min.js"></script>
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "../build/jolt.js"
+	    }
+	  }
 
-	<script>
-		App.create({
+
+	</script>
+
+	<script type="module">
+		import * as Jolt from 'jolt';
+
+		Jolt.create({
 			data: {
 				newTask: null,
 				tasks: ['Butter', 'Milk', 'Eggs']
 			},
 			functions: {
-				add: () => {
-					if (App.data.newTask !== '' && App.data.newTask !== null) {
-						App.data.tasks.push(App.data.newTask);
-						App.data.newTask = null;
+				add() {
+					if (this.newTask !== '' && this.newTask !== null) {
+						this.tasks.push(this.newTask);
+						this.newTask = null;
 					}
 				},
-				remove: (task) => {
-					App.data.tasks.remove(task);
+				remove(task) {
+					this.tasks.remove(task);
 				}
 			}
 		});

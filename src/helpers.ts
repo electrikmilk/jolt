@@ -1,9 +1,15 @@
 /*
  * Copyright (c) 2022 Brandon Jordan
- * Last Modified: 8/10/2022 22:56
+ * Last Modified: 8/26/2022 13:8
  */
 
-let Random: Random = {
+interface Random {
+    id: (prefix: string) => string,
+    number: (max: number) => number
+    color: () => string
+}
+
+export const Random: Random = {
     id: (prefix?: string): string => {
         let S4 = () => {
             return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -18,15 +24,15 @@ let Random: Random = {
     }
 };
 
-function $(selector: string): HTMLElement | null {
+export function $(selector: string): HTMLElement | null {
     return document.querySelector(selector)
 }
 
-function $all(selector: string): NodeListOf<HTMLElement> | null {
+export function $all(selector: string): NodeListOf<HTMLElement> | null {
     return document.querySelectorAll(selector)
 }
 
-function escape(unsafe: string | null) {
+export function escape(unsafe: string | null) {
     if (unsafe === null) {
         return unsafe;
     }
@@ -46,26 +52,64 @@ function escape(unsafe: string | null) {
     });
 }
 
-function getAttributes(element: HTMLElement) {
-    let attrs = [];
-    for (let attr in element.attributes) {
-        let attribute = element.attributes[attr].nodeName;
-        if (attribute !== undefined) {
-            attrs.push(attribute);
+export function data(properties: Object) {
+    if (properties.constructor === Object) {
+        // @ts-ignore
+        for (let property in properties) {
+            // @ts-ignore
+            instance[property] = properties[property];
         }
     }
-    return attrs;
 }
 
-function tempElement(tagName: string, attributes: Object) {
-    let temp = document.createElement(tagName);
-    if (attributes) {
-        for (let attribute in attributes) {
-            // @ts-ignore
-            temp[attribute] = attributes[attribute];
+export function tempElement(tagName: string, attributes: { [name: string]: string }) {
+    let temp = new Element(tagName, attributes);
+    temp.style('display', 'none');
+    return temp.element;
+}
+
+export class Element {
+    element: HTMLElement
+    parent: HTMLElement
+
+    constructor(tagName: string, attributes: { [name: string]: string }) {
+        this.element = document.createElement(tagName);
+        if (attributes) {
+            for (let attribute in attributes) {
+                if (attribute === 'class') {
+                    this.element['className'] = attributes[attribute];
+                } else if (attribute === 'text') {
+                    this.element['innerText'] = attributes[attribute];
+                } else if (attribute === 'html') {
+                    this.element['innerHTML'] = attributes[attribute];
+                } else if (attribute === 'editable') {
+                    this.element['contentEditable'] = attributes[attribute];
+                } else if (attribute === 'parent') {
+                    // @ts-ignore
+                    this.parent = attributes[attribute];
+                } else {
+                    // @ts-ignore
+                    this.element[attribute] = attributes[attribute];
+                }
+            }
         }
+        if (!this.parent) {
+            // @ts-ignore
+            this.parent = document.querySelector('body');
+        }
+        this.parent.appendChild(this.element);
+        return this;
     }
-    temp.style.display = 'none';
-    $("body")?.appendChild(temp);
-    return temp;
+
+    style(property: string, value: string) {
+        // @ts-ignore
+        this.element.style[property] = value;
+        return this;
+    }
+
+    createChild(tagName: string, attributes: { [name: string]: string }) {
+        // @ts-ignore
+        attributes['parent'] = this.element;
+        return new Element(tagName, attributes);
+    }
 }

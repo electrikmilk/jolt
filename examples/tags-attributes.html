@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2022 Brandon Jordan
-  ~ Last Modified: 8/15/2022 10:5
+  ~ Last Modified: 8/26/2022 13:12
   -->
 
 <!doctype html>
@@ -9,10 +9,19 @@
 	<meta charset="UTF-8">
 	<title>Jolt</title>
 
-	<script type="text/javascript" src="../dist/jolt.min.js"></script>
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "../build/jolt.js"
+	    }
+	  }
 
-	<script defer>
-		App.create({
+	</script>
+
+	<script type="module">
+		import * as Jolt from 'jolt';
+
+		Jolt.create({
 			ready: () => {
 				console.log('ready!');
 			},
@@ -42,13 +51,13 @@
 				group: {a: ['item 1', 'item 2', 'item 3'], b: 2, c: '3', d: false, e: null}
 			},
 			functions: {
-				count: () => {
-					App.data.count += 1;
+				increment() {
+					this.count += 1;
 				},
-				remove: (item) => {
-					let index = App.data.list.indexOf(item);
+				remove(item) {
+					let index = this.list.indexOf(item);
 					if (index > -1) {
-						App.data.list.splice(index, 1);
+						this.list.splice(index, 1);
 					}
 				}
 			}
@@ -60,12 +69,11 @@
 
 	<h2><code>model</code> Attribute</h2>
 	<h3 model="count"></h3>
-	<button type="submit" click="count">Click me!</button>
+	<button type="submit" click="increment">Click me!</button>
 
 	<br/><br/>
 
-	<input type="text" model="count"/><br/>
-	<input type="text" model="count"/><br/>
+	<input type="number" model="count"/><br/>
 	<input type="range" model="count" max="100" min="1" step="1"/>
 
 	<p>Model array to HTML list:</p>
