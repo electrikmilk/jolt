@@ -1,7 +1,3 @@
-<p align="center"><a href='https://github.com/electrikmilk/jolt/wiki'>Documentation</a></p>
-
----
-
 ## Getting Started
 
 ```html
@@ -21,6 +17,8 @@ Jolt.create({
     // ...
 });
 ```
+
+<p>Learn more usage from the <a href='https://github.com/electrikmilk/jolt/wiki'>documentation</a>.</p>
 
 ---
 
