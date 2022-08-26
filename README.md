@@ -1,8 +1,30 @@
 <div align=center>
   <h1>&#9889;<br>Jolt</h1>
   <p>Reactive Javascript Utility Framework</p>
-  <a href='https://github.com/electrikmilk/jolt/wiki'>Docs</a>
+  <a href='https://github.com/electrikmilk/jolt/wiki'>Documentation</a>
 </div>
+
+---
+
+## Getting Started
+
+```html
+<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "https://cdn.jsdelivr.net/gh/electrikmilk/jolt/dist/jolt.min.js"
+	    }
+	  }
+</script>
+```
+
+```javascript
+import * as Jolt from 'jolt';
+
+Jolt.create({
+    // ...
+});
+```
 
 ---
 
@@ -43,4 +65,4 @@ Compile and minify to create `build/jolt.min.js`:
 php jolt build prod
 ```
 
-Any of these commands will create a `/build/` directory. Using the `jolt build` or `jolt build prod` commands will delete `build/jolt.ts`.
+Any of these commands will create a `/build/` directory.
