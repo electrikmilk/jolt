@@ -13,7 +13,7 @@ interface SearchParams {
 let urlParams: Array<SearchParams> = [];
 
 registerInit(() => {
-    let url = window.location.href;
+    let url = window.location.pathname;
     if (url.includes('?')) {
         if (typeof URL !== "undefined") {
             let urlObject = new URL(url);
@@ -23,7 +23,7 @@ registerInit(() => {
             })
         } else {
             if (url.includes('&')) {
-                let kvs = window.location.href.split('?')[1].split('&');
+                let kvs = window.location.pathname.split('?')[1].split('&');
                 kvs.forEach(function (kv) {
                     const param = kv.split('=');
                     const key = decodeURIComponent(param[0])
@@ -31,7 +31,7 @@ registerInit(() => {
                     urlParams[key] = decodeURIComponent(param[1]);
                 });
             } else {
-                let kv = window.location.href.split('?')[1];
+                let kv = window.location.pathname.split('?')[1];
                 const param = kv.split('=');
                 const key: string = decodeURIComponent(param[0])
                 // @ts-ignore
