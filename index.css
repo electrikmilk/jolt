@@ -1,0 +1,49 @@
+html,body {
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 18px;
+	line-height: 1.7;
+	background: #141414;
+}
+
+h1, h2, h3 {
+	line-height: 1.2;
+}
+
+.btn {
+	display: block;
+}
+
+a:link:not(.btn) {
+	color: #ffa800;
+}
+
+a:visited:not(.btn) {
+	color: #7900ff;
+}
+
+ul li:before
+{
+	content: "⚡";
+	margin: 0 1em;    /* any design */
+}
+
+pre {
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px solid #555;
+	background: #222;
+	line-height: 1.8;
+	color: #42b3ff;
+}
+
+code {
+	padding: 3px 5px;
+	border-radius: 5px;
+	border: 1px solid #555;
+	background: #333;
+	color: #ddd;
+	line-height: 1.8;
+}

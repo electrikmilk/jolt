@@ -1,0 +1,72 @@
+<!--
+  ~ Copyright (c) 2022 Brandon Jordan
+  ~ Last Modified: 8/26/2022 13:8
+  -->
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Random User</title>
+
+	<script src="https://cdn.tailwindcss.com"></script>
+
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "./jolt.min.js"
+	    }
+	  }
+
+
+
+	</script>
+
+	<script type="module">
+		import * as Jolt from 'jolt';
+
+		Jolt.create({
+			ready: function () {
+				this.get();
+			},
+			data: {
+				photo: null,
+				name: null,
+				username: null,
+				email: null,
+				busy: true
+			},
+			functions: {
+				async get() {
+					this.busy = true;
+					await fetch('https://random-data-api.com/api/users/random_user')
+						.then(response => response.json())
+						.then((response) => {
+							Jolt.data({
+								busy: false,
+								name: response['first_name'] + ' ' + response['last_name'],
+								username: response['username'],
+								email: response['email'],
+								photo: 'https://thispersondoesnotexist.com/image?refresh=' + Jolt.Random.id()
+							});
+						})
+						.catch((error) => {
+							this.busy = false;
+							console.error(error);
+						});
+				}
+			}
+		});
+	</script>
+</head>
+<body class="flex place-content-center place-items-center" style="height: 100vh">
+	<div if="busy">Loading...</div>
+	<div if="!busy" class="text-center">
+		<img .src="{photo}" width="100" class="inline-block mx-auto mb-5 rounded-full border"/>
+		<h3 model="name" class="text-lg font-bold"></h3>
+		<p model="username" class="text-gray-600"></p>
+		<p model="email" class="text-gray-400"></p>
+		<button click="get" class="bg-yellow-400 font-bold py-3 px-5 rounded mt-5">New Person</button>
+	</div>
+</body>
+</html>

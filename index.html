@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- Begin Jekyll SEO tag v2.8.0 -->
+	<title>Jolt - Reactive Javascript Utility Framework</title>
+	<meta name="generator" content="Jekyll v3.9.2"/>
+	<meta property="og:title" content="Jolt"/>
+	<meta property="og:locale" content="en_US"/>
+	<meta name="description" content="Reactive Javascript Utility Framework"/>
+	<meta property="og:description" content="Reactive Javascript Utility Framework"/>
+	<link rel="canonical" href="https://electrikmilk.github.io/jolt/"/>
+	<meta property="og:url" content="https://electrikmilk.github.io/jolt/"/>
+	<meta property="og:site_name" content="jolt"/>
+	<meta property="og:type" content="website"/>
+	<meta name="twitter:card" content="summary"/>
+	<meta property="twitter:title" content="Jolt"/>
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"description": "Reactive Javascript Utility Framework",
+			"headline": "Jolt",
+			"name": "Jolt",
+			"url": "https://electrikmilk.github.io/jolt/"
+		}</script>
+	<!-- End Jekyll SEO tag -->
+
+	<!--Tailwind-->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+	<!-- Setup theme-color -->
+	<!-- start theme color meta headers -->
+	<meta name="theme-color" content="#ffa800">
+	<meta name="msapplication-navbutton-color" content="#ffa800">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<!-- end theme color meta headers -->
+
+	<script type="importmap">
+		{
+	    "imports": {
+	      "jolt": "./jolt.min.js"
+	    }
+	  }
+
+	</script>
+
+	<script type="module" src="index.js"></script>
+
+	<link rel="stylesheet" href="index.css"/>
+
+</head>
+<body class="text-white lg:mx-auto md:mx-auto lg:w-5/6 md:w-5/6">
+
+	<header class="text-center p-10 border-b-2 border-gray-700">
+		<nav>
+			<h1 class="text-3xl font-bold mb-3">⚡ Jolt</h1>
+			<p class="my-5 mb-8">Reactive Javascript Utility Framework</p>
+			<p><a .href="{docs}" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">Documentation</a></p>
+			<p><a href="https://github.com/electrikmilk/jolt" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">View on Github</a></p>
+			<p><a href="/random.html" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">Example App</a></p>
+		</nav>
+	</header>
+
+	<section class="p-5">
+		<h2 class="text-2xl font-bold mb-3">Getting Started</h2>
+		<pre>
+&lt;script type="importmap"&gt;
+	{
+		"imports": {
+			"jolt": "https://cdn.jsdelivr.net/gh/electrikmilk/jolt/dist/jolt.min.js"
+		}
+	}
+&lt;/script&gt;</pre>
+		<br/>
+		<pre>
+import * as Jolt from 'jolt';
+
+Jolt.create({
+	// ...
+});</pre>
+		<br/>
+		<p>Learn more usage from the <a .href="{docs}" target="_blank">documentation</a>.</p>
+		<br/>
+		<h3 class="text-lg font-bold">DO</h3>
+		<ul model="doList"></ul>
+		<br/>
+		<h3 class="text-lg font-bold">DON'T</h3>
+		<ul model="dontList"></ul>
+		<br/>
+		<h2 class="text-2xl font-bold mb-3">Build</h2>
+		<p>Jolt is not only written in TypeScript, but in multiple files and directories in <code>/src/</code> to keep development organized. Therefore, it must be combined and compiled.</p>
+		<br>
+		<p>Combine source to create <code>build/jolt.ts</code>:</p>
+		<pre class="my-5">php jolt mix</pre>
+		<p>Compile to create <code>build/jolt.js</code>:</p>
+		<pre class="my-5">php jolt build</pre>
+		<p>Compile and minify to create <code>build/jolt.min.js</code>:</p>
+		<pre class="my-5">php jolt build prod</pre>
+		<p>Any of these commands will create a <code>/build/</code> directory.</p>
+	</section>
+
+	<footer class="text-center text-gray-400 py-5">
+		&copy; Brandon Jordan
+	</footer>
+
+</body>
+</html>
