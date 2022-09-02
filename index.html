@@ -50,6 +50,7 @@
 	    }
 	  }
 
+
 	</script>
 
 	<script type="module" src="index.js"></script>
@@ -57,15 +58,15 @@
 	<link rel="stylesheet" href="index.css"/>
 
 </head>
-<body class="text-white lg:mx-auto md:mx-auto lg:w-5/6 md:w-5/6">
+<body class="text-white md:mx-auto lg:w-5/6 md:w-5/6">
 
 	<header class="text-center p-10 border-b-2 border-gray-700">
-		<nav>
-			<h1 class="text-3xl font-bold mb-3">⚡ Jolt</h1>
-			<p class="my-5 mb-8">Reactive Javascript Utility Framework</p>
-			<p><a .href="{docs}" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">Documentation</a></p>
-			<p><a href="https://github.com/electrikmilk/jolt" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">View on Github</a></p>
-			<p><a href="random.html" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">Example App</a></p>
+		<h1 class="text-3xl font-bold mb-3">⚡ Jolt</h1>
+		<p class="my-5 mb-8">Reactive Javascript Utility Framework</p>
+		<nav class="md:grid md:grid-cols-3 md:gap-10">
+			<a .href="{docs}" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">Documentation</a>
+			<a href="https://github.com/electrikmilk/jolt" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">View on Github</a>
+			<a href="random.html" class="btn px-5 py-3 my-5 rounded bg-yellow-600 font-bold text-black-900" target="_blank">Example App</a>
 		</nav>
 	</header>
 
@@ -96,7 +97,8 @@ Jolt.create({
 		<ul model="dontList"></ul>
 		<br/>
 		<h2 class="text-2xl font-bold mb-3">Build</h2>
-		<p>Jolt is not only written in TypeScript, but in multiple files and directories in <code>/src/</code> to keep development organized. Therefore, it must be combined and compiled.</p>
+		<p>Jolt is not only written in TypeScript, but in multiple files and directories in
+			<code>/src/</code> to keep development organized. Therefore, it must be combined and compiled.</p>
 		<br>
 		<p>Combine source to create <code>build/jolt.ts</code>:</p>
 		<pre class="my-5">php jolt mix</pre>

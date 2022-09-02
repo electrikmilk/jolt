@@ -5,6 +5,7 @@ Jolt.create({
 		console.log('ready!');
 	},
 	data: {
+		nav: ['item 1','item 2'],
 		docs: 'https://github.com/electrikmilk/jolt/wiki',
 		doList: [
 			'Be easy to learn',
