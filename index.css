@@ -37,6 +37,7 @@ pre {
 	background: #222;
 	line-height: 1.8;
 	color: #42b3ff;
+	overflow-x: scroll;
 }
 
 code {
