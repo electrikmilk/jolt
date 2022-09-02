@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright (c) 2022 Brandon Jordan
+  ~ Last Modified: 8/26/2022 13:36
+  -->
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Todo App - Jolt</title>
+
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "jolt": "../build/jolt.js"
+	    }
+	  }
+
+
+	</script>
+
+	<script type="module">
+		import * as Jolt from 'jolt';
+
+		Jolt.create({
+			data: {
+				newTask: null,
+				tasks: ['Butter', 'Milk', 'Eggs']
+			},
+			functions: {
+				add() {
+					if (this.newTask !== '' && this.newTask !== null) {
+						this.tasks.push(this.newTask);
+						this.newTask = null;
+					}
+				},
+				remove(task) {
+					this.tasks.remove(task);
+				}
+			}
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<input type="text" model="newTask"/>
+		<button click="add">Add</button>
+	</div>
+	<ul>
+		<li foreach="task in tasks">{task}
+			<button click="remove('{task}')">&times;</button>
+		</li>
+	</ul>
+</body>
+</html>
