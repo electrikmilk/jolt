@@ -74,7 +74,7 @@ window.onload = () => {
 
 export function create(options: AppTemplate) {
     if (options.constructor && options.constructor === Object) {
-        if (options.data.constructor && options.data.constructor === Object) {
+        if (options.data && options.data.constructor && options.data.constructor === Object) {
             for (let property in options.data) {
                 dataKeys.push(property);
                 // @ts-ignore
