@@ -1,6 +1,6 @@
 <div align=center>
   <h1>&#9889;<br>Jolt</h1>
-  <p>Reactive Javascript Framework</p>
+  <p>Minimal Javascript Framework</p>
   <a href='https://github.com/electrikmilk/jolt/wiki'>Documentation</a>
 </div>
 
